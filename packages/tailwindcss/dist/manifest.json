@@ -1,0 +1,7 @@
+{
+  "src/index.ts": {
+    "file": "frostui.js",
+    "isEntry": true,
+    "src": "src/index.ts"
+  }
+}

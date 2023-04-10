@@ -1,11 +1,39 @@
 {
   "name": "@frostui/tailwindcss",
-  "version": "0.0.1",
-  "description": "Components Library For Tailwind CSS",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "FrostUI is a component library built upon tailwindcss (Utility first CSS framework)",
+  "private": true,
+  "version": "0.1.0",
+  "exports": {
+    ".": {
+      "import": "./dist/frostui.mjs",
+      "require": "./dist/frostui.cjs.js"
+    },
+    "./plugin": "./plugin.js"
   },
-  "author": "Getappui",
-  "license": "MIT"
+  "main": "./dist/frostui.js",
+  "module": "./dist/frostui.mjs",
+  "typings": "./dist/frostui.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "build:watch": "tsc && vite build --watch",
+    "build:npm": "rm -r -f dist && tsc && vite build && mv dist/index.d.ts dist/frostui.d.ts",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.2.5",
+    "tailwindcss": "^3.3.0"
+  },
+  "devDependencies": {
+    "@lopatnov/rollup-plugin-uglify": "^2.1.5",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/node": "^18.15.11",
+    "rollup-plugin-typescript-paths": "^1.4.0",
+    "terser": "^5.16.8",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.2.1"
+  }
 }
