@@ -3,8 +3,10 @@
   "description": "FrostUI is a component library built upon tailwindcss (Utility first CSS framework)",
   "repository": "https://github.com/getappui/frostui",
   "homepage": "https://github.com/getappui/frostui",
-  "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "import": "./dist/frostui.mjs",
@@ -16,12 +18,13 @@
   "module": "./dist/frostui.mjs",
   "typings": "./dist/frostui.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "plugin.js"
   ],
   "scripts": {
     "build": "tsc && vite build",
     "build:watch": "tsc && vite build --watch",
-    "build:npm": "rm -r -f dist && tsc && vite build && mv dist/index.d.ts dist/frostui.d.ts",
+    "build:npm": "rm -r -f dist && tsc && vite build && mv dist/index.d.ts dist/frostui.d.ts && mv dist/frostui.umd.js dist/frostui.js",
     "dev": "vite"
   },
   "dependencies": {

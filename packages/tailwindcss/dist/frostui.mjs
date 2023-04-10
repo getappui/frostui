@@ -145,7 +145,7 @@ const et = {
     this._targetElement != null && !this._targetElement.classList.contains(_.DEFAULT.class.hidden) && this._element.classList.add(_.DEFAULT.class.open), this.config.toggle && this.toggle();
   }
   initListener() {
-    this._element.addEventListener("click", (t) => {
+    this._element.addEventListener("click", () => {
       this.toggle();
     });
   }
@@ -530,7 +530,7 @@ const Qt = { getClippingRect: function(e) {
     let u = p ? K(c) : c;
     for (; I(u) && !Et(u); ) {
       const y = O(u), w = gt(u);
-      y.position === "fixed" ? m = null : (p ? w || m : w || y.position !== "static" || !m || !["absolute", "fixed"].includes(m.position)) ? m = y : g = g.filter((v) => v !== u), u = K(u);
+      y.position === "fixed" && (m = null), (p ? w || m : w || y.position !== "static" || !m || !["absolute", "fixed"].includes(m.position)) ? m = y : g = g.filter((v) => v !== u), u = K(u);
     }
     return f.set(c, g), g;
   }(i, this._c) : [].concat(t), r = [...l, n], a = r[0], h = r.reduce((c, f) => {
@@ -715,7 +715,7 @@ const T = class extends $ {
   }
   initListener() {
     var t;
-    this._element != null && (this._element.addEventListener("click", (n) => {
+    this._element != null && (this._element.addEventListener("click", () => {
       this.toggle();
     }), (t = this._targetElement) == null || t.querySelectorAll(`[${T.DEFAULT.attr.dismiss}]`).forEach((n) => {
       n.addEventListener("click", () => {
@@ -959,7 +959,7 @@ const X = class extends $ {
     this._element != null && (this._targetElement = this._getTargetElement()), this._targetElement && this.initListener();
   }
   initListener() {
-    this._element.addEventListener("click", (t) => {
+    this._element.addEventListener("click", () => {
       this.hide();
     });
   }
