@@ -124,6 +124,14 @@
   dependencies:
     "@floating-ui/core" "^1.2.6"
 
+"@frostui/tailwindcss@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@frostui/tailwindcss/-/tailwindcss-0.1.2.tgz#54e9cae89513653ad91ab305340b759cc59c80d6"
+  integrity sha512-BisTtSYz4dBaOzA9yq/C19bw+G3wPkJnndbVBOTMbpcFyjSOoJOlzVlrkRy6i21UEmEDYv/nhzCn6SKIiYR5Uw==
+  dependencies:
+    "@floating-ui/dom" "^1.2.6"
+    tailwindcss "^3.3.1"
+
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"
