@@ -243,41 +243,41 @@ function rt(e) {
 }
 function Lt(e, i, t) {
   let { reference: n, floating: s } = e;
-  const l = n.x + n.width / 2 - s.width / 2, r = n.y + n.height / 2 - s.height / 2, a = rt(i), h = At(a), c = n[h] / 2 - s[h] / 2, f = a === "x";
-  let o;
+  const l = n.x + n.width / 2 - s.width / 2, r = n.y + n.height / 2 - s.height / 2, o = rt(i), h = At(o), c = n[h] / 2 - s[h] / 2, f = o === "x";
+  let a;
   switch (lt(i)) {
     case "top":
-      o = { x: l, y: n.y - s.height };
+      a = { x: l, y: n.y - s.height };
       break;
     case "bottom":
-      o = { x: l, y: n.y + n.height };
+      a = { x: l, y: n.y + n.height };
       break;
     case "right":
-      o = { x: n.x + n.width, y: r };
+      a = { x: n.x + n.width, y: r };
       break;
     case "left":
-      o = { x: n.x - s.width, y: r };
+      a = { x: n.x - s.width, y: r };
       break;
     default:
-      o = { x: n.x, y: n.y };
+      a = { x: n.x, y: n.y };
   }
   switch (ut(i)) {
     case "start":
-      o[a] -= c * (t && f ? -1 : 1);
+      a[o] -= c * (t && f ? -1 : 1);
       break;
     case "end":
-      o[a] += c * (t && f ? -1 : 1);
+      a[o] += c * (t && f ? -1 : 1);
   }
-  return o;
+  return a;
 }
 const It = async (e, i, t) => {
-  const { placement: n = "bottom", strategy: s = "absolute", middleware: l = [], platform: r } = t, a = l.filter(Boolean), h = await (r.isRTL == null ? void 0 : r.isRTL(i));
-  let c = await r.getElementRects({ reference: e, floating: i, strategy: s }), { x: f, y: o } = Lt(c, n, h), g = n, m = {}, p = 0;
-  for (let u = 0; u < a.length; u++) {
-    const { name: y, fn: w } = a[u], { x: v, y: x, data: F, reset: k } = await w({ x: f, y: o, initialPlacement: n, placement: g, strategy: s, middlewareData: m, rects: c, platform: r, elements: { reference: e, floating: i } });
-    f = v ?? f, o = x ?? o, m = { ...m, [y]: { ...m[y], ...F } }, k && p <= 50 && (p++, typeof k == "object" && (k.placement && (g = k.placement), k.rects && (c = k.rects === !0 ? await r.getElementRects({ reference: e, floating: i, strategy: s }) : k.rects), { x: f, y: o } = Lt(c, g, h)), u = -1);
+  const { placement: n = "bottom", strategy: s = "absolute", middleware: l = [], platform: r } = t, o = l.filter(Boolean), h = await (r.isRTL == null ? void 0 : r.isRTL(i));
+  let c = await r.getElementRects({ reference: e, floating: i, strategy: s }), { x: f, y: a } = Lt(c, n, h), g = n, m = {}, p = 0;
+  for (let u = 0; u < o.length; u++) {
+    const { name: y, fn: w } = o[u], { x: v, y: x, data: F, reset: k } = await w({ x: f, y: a, initialPlacement: n, placement: g, strategy: s, middlewareData: m, rects: c, platform: r, elements: { reference: e, floating: i } });
+    f = v ?? f, a = x ?? a, m = { ...m, [y]: { ...m[y], ...F } }, k && p <= 50 && (p++, typeof k == "object" && (k.placement && (g = k.placement), k.rects && (c = k.rects === !0 ? await r.getElementRects({ reference: e, floating: i, strategy: s }) : k.rects), { x: f, y: a } = Lt(c, g, h)), u = -1);
   }
-  return { x: f, y: o, placement: g, strategy: s, middlewareData: m };
+  return { x: f, y: a, placement: g, strategy: s, middlewareData: m };
 };
 function _t(e) {
   return typeof e != "number" ? function(i) {
@@ -290,7 +290,7 @@ function it(e) {
 async function Mt(e, i) {
   var t;
   i === void 0 && (i = {});
-  const { x: n, y: s, platform: l, rects: r, elements: a, strategy: h } = e, { boundary: c = "clippingAncestors", rootBoundary: f = "viewport", elementContext: o = "floating", altBoundary: g = !1, padding: m = 0 } = i, p = _t(m), u = a[g ? o === "floating" ? "reference" : "floating" : o], y = it(await l.getClippingRect({ element: (t = await (l.isElement == null ? void 0 : l.isElement(u))) == null || t ? u : u.contextElement || await (l.getDocumentElement == null ? void 0 : l.getDocumentElement(a.floating)), boundary: c, rootBoundary: f, strategy: h })), w = o === "floating" ? { ...r.floating, x: n, y: s } : r.reference, v = await (l.getOffsetParent == null ? void 0 : l.getOffsetParent(a.floating)), x = await (l.isElement == null ? void 0 : l.isElement(v)) && await (l.getScale == null ? void 0 : l.getScale(v)) || { x: 1, y: 1 }, F = it(l.convertOffsetParentRelativeRectToViewportRelativeRect ? await l.convertOffsetParentRelativeRectToViewportRelativeRect({ rect: w, offsetParent: v, strategy: h }) : w);
+  const { x: n, y: s, platform: l, rects: r, elements: o, strategy: h } = e, { boundary: c = "clippingAncestors", rootBoundary: f = "viewport", elementContext: a = "floating", altBoundary: g = !1, padding: m = 0 } = i, p = _t(m), u = o[g ? a === "floating" ? "reference" : "floating" : a], y = it(await l.getClippingRect({ element: (t = await (l.isElement == null ? void 0 : l.isElement(u))) == null || t ? u : u.contextElement || await (l.getDocumentElement == null ? void 0 : l.getDocumentElement(o.floating)), boundary: c, rootBoundary: f, strategy: h })), w = a === "floating" ? { ...r.floating, x: n, y: s } : r.reference, v = await (l.getOffsetParent == null ? void 0 : l.getOffsetParent(o.floating)), x = await (l.isElement == null ? void 0 : l.isElement(v)) && await (l.getScale == null ? void 0 : l.getScale(v)) || { x: 1, y: 1 }, F = it(l.convertOffsetParentRelativeRectToViewportRelativeRect ? await l.convertOffsetParentRelativeRectToViewportRelativeRect({ rect: w, offsetParent: v, strategy: h }) : w);
   return { top: (y.top - F.top + p.top) / x.y, bottom: (F.bottom - y.bottom + p.bottom) / x.y, left: (y.left - F.left + p.left) / x.x, right: (F.right - y.right + p.right) / x.x };
 }
 const Pt = Math.min, jt = Math.max;
@@ -298,20 +298,20 @@ function ft(e, i, t) {
   return jt(e, Pt(i, t));
 }
 const qt = (e) => ({ name: "arrow", options: e, async fn(i) {
-  const { element: t, padding: n = 0 } = e || {}, { x: s, y: l, placement: r, rects: a, platform: h, elements: c } = i;
+  const { element: t, padding: n = 0 } = e || {}, { x: s, y: l, placement: r, rects: o, platform: h, elements: c } = i;
   if (t == null)
     return {};
-  const f = _t(n), o = { x: s, y: l }, g = rt(r), m = At(g), p = await h.getDimensions(t), u = g === "y", y = u ? "top" : "left", w = u ? "bottom" : "right", v = u ? "clientHeight" : "clientWidth", x = a.reference[m] + a.reference[g] - o[g] - a.floating[m], F = o[g] - a.reference[g], k = await (h.getOffsetParent == null ? void 0 : h.getOffsetParent(t));
+  const f = _t(n), a = { x: s, y: l }, g = rt(r), m = At(g), p = await h.getDimensions(t), u = g === "y", y = u ? "top" : "left", w = u ? "bottom" : "right", v = u ? "clientHeight" : "clientWidth", x = o.reference[m] + o.reference[g] - a[g] - o.floating[m], F = a[g] - o.reference[g], k = await (h.getOffsetParent == null ? void 0 : h.getOffsetParent(t));
   let Q = k ? k[v] : 0;
-  Q && await (h.isElement == null ? void 0 : h.isElement(k)) || (Q = c.floating[v] || a.floating[m]);
-  const Ht = x / 2 - F / 2, Z = f[y], yt = Q - p[m] - f[w], j = Q / 2 - p[m] / 2 + Ht, ct = ft(Z, j, yt), $t = ut(r) != null && j != ct && a.reference[m] / 2 - (j < Z ? f[y] : f[w]) - p[m] / 2 < 0;
-  return { [g]: o[g] - ($t ? j < Z ? Z - j : yt - j : 0), data: { [g]: ct, centerOffset: j - ct } };
+  Q && await (h.isElement == null ? void 0 : h.isElement(k)) || (Q = c.floating[v] || o.floating[m]);
+  const Ht = x / 2 - F / 2, Z = f[y], yt = Q - p[m] - f[w], j = Q / 2 - p[m] / 2 + Ht, ct = ft(Z, j, yt), $t = ut(r) != null && j != ct && o.reference[m] / 2 - (j < Z ? f[y] : f[w]) - p[m] / 2 < 0;
+  return { [g]: a[g] - ($t ? j < Z ? Z - j : yt - j : 0), data: { [g]: ct, centerOffset: j - ct } };
 } }), Xt = ["top", "right", "bottom", "left"];
 Xt.reduce((e, i) => e.concat(i, i + "-start", i + "-end"), []);
 const Yt = function(e) {
   return e === void 0 && (e = 0), { name: "offset", options: e, async fn(i) {
     const { x: t, y: n } = i, s = await async function(l, r) {
-      const { placement: a, platform: h, elements: c } = l, f = await (h.isRTL == null ? void 0 : h.isRTL(c.floating)), o = lt(a), g = ut(a), m = rt(a) === "x", p = ["left", "top"].includes(o) ? -1 : 1, u = f && m ? -1 : 1, y = typeof r == "function" ? r(l) : r;
+      const { placement: o, platform: h, elements: c } = l, f = await (h.isRTL == null ? void 0 : h.isRTL(c.floating)), a = lt(o), g = ut(o), m = rt(o) === "x", p = ["left", "top"].includes(a) ? -1 : 1, u = f && m ? -1 : 1, y = typeof r == "function" ? r(l) : r;
       let { mainAxis: w, crossAxis: v, alignmentAxis: x } = typeof y == "number" ? { mainAxis: y, crossAxis: 0, alignmentAxis: null } : { mainAxis: 0, crossAxis: 0, alignmentAxis: null, ...y };
       return g && typeof x == "number" && (v = g === "end" ? -1 * x : x), m ? { x: v * u, y: w * p } : { x: w * p, y: v * u };
     }(i, e);
@@ -323,20 +323,20 @@ function zt(e) {
 }
 const Gt = function(e) {
   return e === void 0 && (e = {}), { name: "shift", options: e, async fn(i) {
-    const { x: t, y: n, placement: s } = i, { mainAxis: l = !0, crossAxis: r = !1, limiter: a = { fn: (y) => {
+    const { x: t, y: n, placement: s } = i, { mainAxis: l = !0, crossAxis: r = !1, limiter: o = { fn: (y) => {
       let { x: w, y: v } = y;
       return { x: w, y: v };
-    } }, ...h } = e, c = { x: t, y: n }, f = await Mt(i, h), o = rt(lt(s)), g = zt(o);
-    let m = c[o], p = c[g];
+    } }, ...h } = e, c = { x: t, y: n }, f = await Mt(i, h), a = rt(lt(s)), g = zt(a);
+    let m = c[a], p = c[g];
     if (l) {
-      const y = o === "y" ? "bottom" : "right";
-      m = ft(m + f[o === "y" ? "top" : "left"], m, m - f[y]);
+      const y = a === "y" ? "bottom" : "right";
+      m = ft(m + f[a === "y" ? "top" : "left"], m, m - f[y]);
     }
     if (r) {
       const y = g === "y" ? "bottom" : "right";
       p = ft(p + f[g === "y" ? "top" : "left"], p, p - f[y]);
     }
-    const u = a.fn({ ...i, [o]: m, [g]: p });
+    const u = o.fn({ ...i, [a]: m, [g]: p });
     return { ...u, data: { x: u.x - t, y: u.y - n } };
   } };
 };
@@ -369,7 +369,7 @@ function I(e) {
 function wt(e) {
   return typeof ShadowRoot > "u" ? !1 : e instanceof D(e).ShadowRoot || e instanceof ShadowRoot;
 }
-function at(e) {
+function ot(e) {
   const { overflow: i, overflowX: t, overflowY: n, display: s } = O(e);
   return /auto|scroll|overlay|hidden|clip/.test(i + n + t) && !["inline", "contents"].includes(s);
 }
@@ -393,8 +393,8 @@ const vt = Math.min, G = Math.max, nt = Math.round;
 function Ft(e) {
   const i = O(e);
   let t = parseFloat(i.width), n = parseFloat(i.height);
-  const s = U(e), l = s ? e.offsetWidth : t, r = s ? e.offsetHeight : n, a = nt(t) !== l || nt(n) !== r;
-  return a && (t = l, n = r), { width: t, height: n, fallback: a };
+  const s = U(e), l = s ? e.offsetWidth : t, r = s ? e.offsetHeight : n, o = nt(t) !== l || nt(n) !== r;
+  return o && (t = l, n = r), { width: t, height: n, fallback: o };
 }
 function kt(e) {
   return I(e) ? e : e.contextElement;
@@ -405,35 +405,35 @@ function Y(e) {
   if (!U(i))
     return Ut;
   const t = i.getBoundingClientRect(), { width: n, height: s, fallback: l } = Ft(i);
-  let r = (l ? nt(t.width) : t.width) / n, a = (l ? nt(t.height) : t.height) / s;
-  return r && Number.isFinite(r) || (r = 1), a && Number.isFinite(a) || (a = 1), { x: r, y: a };
+  let r = (l ? nt(t.width) : t.width) / n, o = (l ? nt(t.height) : t.height) / s;
+  return r && Number.isFinite(r) || (r = 1), o && Number.isFinite(o) || (o = 1), { x: r, y: o };
 }
 function J(e, i, t, n) {
   var s, l;
   i === void 0 && (i = !1), t === void 0 && (t = !1);
-  const r = e.getBoundingClientRect(), a = kt(e);
+  const r = e.getBoundingClientRect(), o = kt(e);
   let h = Ut;
   i && (n ? I(n) && (h = Y(n)) : h = Y(e));
-  const c = a ? D(a) : window, f = mt() && t;
-  let o = (r.left + (f && ((s = c.visualViewport) == null ? void 0 : s.offsetLeft) || 0)) / h.x, g = (r.top + (f && ((l = c.visualViewport) == null ? void 0 : l.offsetTop) || 0)) / h.y, m = r.width / h.x, p = r.height / h.y;
-  if (a) {
-    const u = D(a), y = n && I(n) ? D(n) : n;
+  const c = o ? D(o) : window, f = mt() && t;
+  let a = (r.left + (f && ((s = c.visualViewport) == null ? void 0 : s.offsetLeft) || 0)) / h.x, g = (r.top + (f && ((l = c.visualViewport) == null ? void 0 : l.offsetTop) || 0)) / h.y, m = r.width / h.x, p = r.height / h.y;
+  if (o) {
+    const u = D(o), y = n && I(n) ? D(n) : n;
     let w = u.frameElement;
     for (; w && n && y !== u; ) {
       const v = Y(w), x = w.getBoundingClientRect(), F = getComputedStyle(w);
-      x.x += (w.clientLeft + parseFloat(F.paddingLeft)) * v.x, x.y += (w.clientTop + parseFloat(F.paddingTop)) * v.y, o *= v.x, g *= v.y, m *= v.x, p *= v.y, o += x.x, g += x.y, w = D(w).frameElement;
+      x.x += (w.clientLeft + parseFloat(F.paddingLeft)) * v.x, x.y += (w.clientTop + parseFloat(F.paddingTop)) * v.y, a *= v.x, g *= v.y, m *= v.x, p *= v.y, a += x.x, g += x.y, w = D(w).frameElement;
     }
   }
-  return it({ width: m, height: p, x: o, y: g });
+  return it({ width: m, height: p, x: a, y: g });
 }
 function M(e) {
   return ((St(e) ? e.ownerDocument : e.document) || window.document).documentElement;
 }
-function ot(e) {
+function at(e) {
   return I(e) ? { scrollLeft: e.scrollLeft, scrollTop: e.scrollTop } : { scrollLeft: e.pageXOffset, scrollTop: e.pageYOffset };
 }
 function Ot(e) {
-  return J(M(e)).left + ot(e).scrollLeft;
+  return J(M(e)).left + at(e).scrollLeft;
 }
 function K(e) {
   if (P(e) === "html")
@@ -443,45 +443,45 @@ function K(e) {
 }
 function Ct(e) {
   const i = K(e);
-  return Et(i) ? i.ownerDocument.body : U(i) && at(i) ? i : Ct(i);
+  return Et(i) ? i.ownerDocument.body : U(i) && ot(i) ? i : Ct(i);
 }
 function Rt(e, i) {
   var t;
   i === void 0 && (i = []);
   const n = Ct(e), s = n === ((t = e.ownerDocument) == null ? void 0 : t.body), l = D(n);
-  return s ? i.concat(l, l.visualViewport || [], at(n) ? n : []) : i.concat(n, Rt(n));
+  return s ? i.concat(l, l.visualViewport || [], ot(n) ? n : []) : i.concat(n, Rt(n));
 }
 function Tt(e, i, t) {
   let n;
   if (i === "viewport")
-    n = function(r, a) {
+    n = function(r, o) {
       const h = D(r), c = M(r), f = h.visualViewport;
-      let o = c.clientWidth, g = c.clientHeight, m = 0, p = 0;
+      let a = c.clientWidth, g = c.clientHeight, m = 0, p = 0;
       if (f) {
-        o = f.width, g = f.height;
+        a = f.width, g = f.height;
         const u = mt();
-        (!u || u && a === "fixed") && (m = f.offsetLeft, p = f.offsetTop);
+        (!u || u && o === "fixed") && (m = f.offsetLeft, p = f.offsetTop);
       }
-      return { width: o, height: g, x: m, y: p };
+      return { width: a, height: g, x: m, y: p };
     }(e, t);
   else if (i === "document")
     n = function(r) {
-      const a = M(r), h = ot(r), c = r.ownerDocument.body, f = G(a.scrollWidth, a.clientWidth, c.scrollWidth, c.clientWidth), o = G(a.scrollHeight, a.clientHeight, c.scrollHeight, c.clientHeight);
+      const o = M(r), h = at(r), c = r.ownerDocument.body, f = G(o.scrollWidth, o.clientWidth, c.scrollWidth, c.clientWidth), a = G(o.scrollHeight, o.clientHeight, c.scrollHeight, c.clientHeight);
       let g = -h.scrollLeft + Ot(r);
       const m = -h.scrollTop;
-      return O(c).direction === "rtl" && (g += G(a.clientWidth, c.clientWidth) - f), { width: f, height: o, x: g, y: m };
+      return O(c).direction === "rtl" && (g += G(o.clientWidth, c.clientWidth) - f), { width: f, height: a, x: g, y: m };
     }(M(e));
   else if (I(i))
-    n = function(r, a) {
-      const h = J(r, !0, a === "fixed"), c = h.top + r.clientTop, f = h.left + r.clientLeft, o = U(r) ? Y(r) : { x: 1, y: 1 };
-      return { width: r.clientWidth * o.x, height: r.clientHeight * o.y, x: f * o.x, y: c * o.y };
+    n = function(r, o) {
+      const h = J(r, !0, o === "fixed"), c = h.top + r.clientTop, f = h.left + r.clientLeft, a = U(r) ? Y(r) : { x: 1, y: 1 };
+      return { width: r.clientWidth * a.x, height: r.clientHeight * a.y, x: f * a.x, y: c * a.y };
     }(i, t);
   else {
     const r = { ...i };
     if (mt()) {
       var s, l;
-      const a = D(e);
-      r.x -= ((s = a.visualViewport) == null ? void 0 : s.offsetLeft) || 0, r.y -= ((l = a.visualViewport) == null ? void 0 : l.offsetTop) || 0;
+      const o = D(e);
+      r.x -= ((s = o.visualViewport) == null ? void 0 : s.offsetLeft) || 0, r.y -= ((l = o.visualViewport) == null ? void 0 : l.offsetTop) || 0;
     }
     n = r;
   }
@@ -510,21 +510,21 @@ function xt(e, i) {
 function Kt(e, i, t) {
   const n = U(i), s = M(i), l = J(e, !0, t === "fixed", i);
   let r = { scrollLeft: 0, scrollTop: 0 };
-  const a = { x: 0, y: 0 };
+  const o = { x: 0, y: 0 };
   if (n || !n && t !== "fixed")
-    if ((P(i) !== "body" || at(s)) && (r = ot(i)), U(i)) {
+    if ((P(i) !== "body" || ot(s)) && (r = at(i)), U(i)) {
       const h = J(i, !0);
-      a.x = h.x + i.clientLeft, a.y = h.y + i.clientTop;
+      o.x = h.x + i.clientLeft, o.y = h.y + i.clientTop;
     } else
-      s && (a.x = Ot(s));
-  return { x: l.left + r.scrollLeft - a.x, y: l.top + r.scrollTop - a.y, width: l.width, height: l.height };
+      s && (o.x = Ot(s));
+  return { x: l.left + r.scrollLeft - o.x, y: l.top + r.scrollTop - o.y, width: l.width, height: l.height };
 }
 const Qt = { getClippingRect: function(e) {
   let { element: i, boundary: t, rootBoundary: n, strategy: s } = e;
   const l = t === "clippingAncestors" ? function(c, f) {
-    const o = f.get(c);
-    if (o)
-      return o;
+    const a = f.get(c);
+    if (a)
+      return a;
     let g = Rt(c).filter((y) => I(y) && P(y) !== "body"), m = null;
     const p = O(c).position === "fixed";
     let u = p ? K(c) : c;
@@ -533,23 +533,23 @@ const Qt = { getClippingRect: function(e) {
       y.position === "fixed" && (m = null), (p ? w || m : w || y.position !== "static" || !m || !["absolute", "fixed"].includes(m.position)) ? m = y : g = g.filter((v) => v !== u), u = K(u);
     }
     return f.set(c, g), g;
-  }(i, this._c) : [].concat(t), r = [...l, n], a = r[0], h = r.reduce((c, f) => {
-    const o = Tt(i, f, s);
-    return c.top = G(o.top, c.top), c.right = vt(o.right, c.right), c.bottom = vt(o.bottom, c.bottom), c.left = G(o.left, c.left), c;
-  }, Tt(i, a, s));
+  }(i, this._c) : [].concat(t), r = [...l, n], o = r[0], h = r.reduce((c, f) => {
+    const a = Tt(i, f, s);
+    return c.top = G(a.top, c.top), c.right = vt(a.right, c.right), c.bottom = vt(a.bottom, c.bottom), c.left = G(a.left, c.left), c;
+  }, Tt(i, o, s));
   return { width: h.right - h.left, height: h.bottom - h.top, x: h.left, y: h.top };
 }, convertOffsetParentRelativeRectToViewportRelativeRect: function(e) {
   let { rect: i, offsetParent: t, strategy: n } = e;
   const s = U(t), l = M(t);
   if (t === l)
     return i;
-  let r = { scrollLeft: 0, scrollTop: 0 }, a = { x: 1, y: 1 };
+  let r = { scrollLeft: 0, scrollTop: 0 }, o = { x: 1, y: 1 };
   const h = { x: 0, y: 0 };
-  if ((s || !s && n !== "fixed") && ((P(t) !== "body" || at(l)) && (r = ot(t)), U(t))) {
+  if ((s || !s && n !== "fixed") && ((P(t) !== "body" || ot(l)) && (r = at(t)), U(t))) {
     const c = J(t);
-    a = Y(t), h.x = c.x + t.clientLeft, h.y = c.y + t.clientTop;
+    o = Y(t), h.x = c.x + t.clientLeft, h.y = c.y + t.clientTop;
   }
-  return { width: i.width * a.x, height: i.height * a.y, x: i.x * a.x - r.scrollLeft * a.x + h.x, y: i.y * a.y - r.scrollTop * a.y + h.y };
+  return { width: i.width * o.x, height: i.height * o.y, x: i.x * o.x - r.scrollLeft * o.x + h.x, y: i.y * o.y - r.scrollTop * o.y + h.y };
 }, isElement: I, getDimensions: function(e) {
   return Ft(e);
 }, getOffsetParent: xt, getDocumentElement: M, getScale: Y, async getElementRects(e) {
@@ -580,8 +580,8 @@ const Qt = { getClippingRect: function(e) {
     this._element != null && (this._targetElement = this.getTargetElement(), this.initOptions(), this.initListener());
   }
   initOptions() {
-    var t, n, s, l, r, a;
-    (t = this._targetElement) == null || t.classList.add(A.DEFAULT.class.base), (s = this.config).placement ?? (s.placement = ((n = this._element) == null ? void 0 : n.getAttribute(A.DEFAULT.attr.placement)) ?? "bottom-start"), (r = this.config).trigger ?? (r.trigger = ((l = this._element) == null ? void 0 : l.getAttribute(A.DEFAULT.attr.trigger)) == "hover" ? "hover" : "click"), ((a = this._targetElement) == null ? void 0 : a.classList.contains(A.DEFAULT.class.hidden)) === !1 && this.show();
+    var t, n, s, l, r, o;
+    (t = this._targetElement) == null || t.classList.add(A.DEFAULT.class.base), (s = this.config).placement ?? (s.placement = ((n = this._element) == null ? void 0 : n.getAttribute(A.DEFAULT.attr.placement)) ?? "bottom-start"), (r = this.config).trigger ?? (r.trigger = ((l = this._element) == null ? void 0 : l.getAttribute(A.DEFAULT.attr.trigger)) == "hover" ? "hover" : "click"), ((o = this._targetElement) == null ? void 0 : o.classList.contains(A.DEFAULT.class.hidden)) === !1 && this.show();
   }
   initListener() {
     var t, n;
@@ -668,14 +668,8 @@ const pt = class extends $ {
       });
   }
   showTab(t) {
-    for (const n of this._elements.keys()) {
-      const s = this._elements.get(n);
-      t == n ? (s.classList.remove("hidden"), setTimeout(() => {
-        n.classList.add("active"), s.classList.add("active");
-      })) : (n.classList.remove("active"), s.classList.remove("active"), setTimeout(() => {
-        s.classList.add("hidden");
-      }));
-    }
+    const n = this._elements.get(t), l = Array.from(this._elements.keys()).filter((r) => r != t).map((r) => this._elements.get(r));
+    n == null || n.classList.remove("hidden"), l.forEach((r) => r.classList.add("hidden"));
   }
 };
 let W = pt;
@@ -784,8 +778,8 @@ const L = class extends $ {
   initOptions() {
     var t, n, s, l, r;
     if ((t = this._element) != null && t.hasAttribute(L.DEFAULT.attr.placement) && (this.config.placement = (n = this._element) == null ? void 0 : n.getAttribute(L.DEFAULT.attr.placement)), (s = this._element) != null && s.hasAttribute(L.DEFAULT.attr.trigger) && (this.config.trigger = ((l = this._element) == null ? void 0 : l.getAttribute(L.DEFAULT.attr.trigger)) === "click" ? "click" : "hover"), (r = this._element) != null && r.hasAttribute(L.DEFAULT.attr.offset)) {
-      const a = this._element.getAttribute(L.DEFAULT.attr.offset);
-      isNaN(parseInt(a)) || (this._targetOffset = parseInt(a));
+      const o = this._element.getAttribute(L.DEFAULT.attr.offset);
+      isNaN(parseInt(o)) || (this._targetOffset = parseInt(o));
     }
   }
   initListener() {
@@ -822,14 +816,14 @@ const L = class extends $ {
       placement: this.config.placement,
       middleware: t
     }).then(({ x: n, y: s, middlewareData: l }) => {
-      var r, a, h, c;
+      var r, o, h, c;
       if (Object.assign(this._targetElement.style, {
         left: `${n}px`,
         top: `${s}px`
       }), l.arrow && this._arrowElement) {
-        const { x: f, y: o } = l.arrow, g = f != null ? `${f}px` : `${-this._arrowElement.offsetWidth / 2}px`, m = o != null ? `${o}px` : `${-this._arrowElement.offsetHeight / 2}px`, p = {
+        const { x: f, y: a } = l.arrow, g = f != null ? `${f}px` : `${-this._arrowElement.offsetWidth / 2}px`, m = a != null ? `${a}px` : `${-this._arrowElement.offsetHeight / 2}px`, p = {
           left: (r = this.config.placement) != null && r.includes("left") ? null : g,
-          top: (a = this.config.placement) != null && a.includes("top") ? null : m,
+          top: (o = this.config.placement) != null && o.includes("top") ? null : m,
           right: (h = this.config.placement) != null && h.includes("left") ? g : null,
           bottom: (c = this.config.placement) != null && c.includes("top") ? m : null
         };
@@ -875,12 +869,12 @@ const b = class extends $ {
     this._element != null && (this._targetElement = this.getTargetElement(), (t = this._targetElement) == null || t.classList.add(b.DEFAULT.class.base), this.initOptions(), this.initListener());
   }
   initOptions() {
-    var l, r, a;
+    var l, r, o;
     let t = (l = this._element) == null ? void 0 : l.getAttribute(b.DEFAULT.attr.scroll);
     t ? this.config.scroll = t !== "false" : this.config.scroll == null && (this.config.scroll = !1);
     let n = (r = this._element) == null ? void 0 : r.getAttribute(b.DEFAULT.attr.backdrop);
     n ? this.config.backdrop = n !== "false" : this.config.backdrop == null && (this.config.backdrop = !0);
-    let s = (a = this._element) == null ? void 0 : a.getAttribute(b.DEFAULT.attr.behavior);
+    let s = (o = this._element) == null ? void 0 : o.getAttribute(b.DEFAULT.attr.behavior);
     s ? this.config.behavior = s == "static" ? "static" : "default" : this.config.behavior == null && (this.config.behavior = "default");
   }
   initListener() {

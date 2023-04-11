@@ -8,30 +8,28 @@
  */
 
 import BaseComponent from './base'
-import { type TabOption } from '~/types'
-import { DomEngine } from '~/dom/engine'
+import {type TabOption} from '~/types'
+import {DomEngine} from '~/dom/engine'
 
 export default class Tab extends BaseComponent<TabOption> {
 
     static readonly type: string = 'tab'
     static readonly SELECTOR: string = '[data-fc-type="tab"]'
-
-    // Element
-    private _elements = new Map<HTMLElement, HTMLElement>()
-
     // Default Parameters
     static readonly DEFAULT = {
         attr: {
             target: 'data-fc-target',
         }
     }
+    // Element
+    private _elements = new Map<HTMLElement, HTMLElement>()
 
-    constructor (element: HTMLElement | string | null, config?: TabOption | null) {
+    constructor(element: HTMLElement | string | null, config?: TabOption | null) {
         super(element, config)
         this.init()
     }
 
-    private init (): void {
+    private init(): void {
         if (this._element != null) {
 
             const map = new Map<HTMLElement, HTMLElement>()
@@ -69,7 +67,7 @@ export default class Tab extends BaseComponent<TabOption> {
         }
     }
 
-    private initListener () {
+    private initListener() {
         for (const tab of this._elements.keys()) {
             tab.addEventListener('click', () => {
                 this.showTab(tab)
@@ -77,22 +75,19 @@ export default class Tab extends BaseComponent<TabOption> {
         }
     }
 
-    private showTab (selectedTab: HTMLElement) {
-        for (const tab of this._elements.keys()) {
-            const content = this._elements.get(tab)!
-            if (selectedTab == tab) {
-                content.classList.remove('hidden')
-                setTimeout(() => {
-                    tab.classList.add('active')
-                    content.classList.add('active')
-                })
-            } else {
-                tab.classList.remove('active')
-                content.classList.remove('active')
-                setTimeout(() => {
-                    content.classList.add('hidden')
-                })
-            }
-        }
+    private showTab(selectedTab: HTMLElement) {
+        const activatedContent = this._elements.get(selectedTab)
+
+        const otherTabs = Array.from(this._elements.keys()).filter((e) => e != selectedTab)
+        const otherContent = otherTabs.map((e) => this._elements.get(e)!)
+
+        activatedContent?.classList.remove('hidden')
+        otherContent.forEach((e) => e.classList.add('hidden'))
+
+        activatedContent?.classList.add('active')
+        selectedTab.classList.add('active')
+
+        otherContent.forEach((e) => e.classList.remove('active'))
+        otherTabs.forEach((e) => e.classList.remove('active'))
     }
 }
