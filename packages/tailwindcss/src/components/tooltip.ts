@@ -10,7 +10,7 @@
 import BaseComponent from './base'
 import { Placement, type TooltipOption } from '~/types'
 import { DomEngine } from '~/dom/engine'
-import { arrow, computePosition, offset, shift } from '@floating-ui/dom'
+import { arrow, computePosition, offset, shift, flip } from '@floating-ui/dom'
 
 export default class Tooltip extends BaseComponent<TooltipOption> {
 
@@ -51,6 +51,48 @@ export default class Tooltip extends BaseComponent<TooltipOption> {
     constructor (element: HTMLElement | string | null, config?: TooltipOption | null) {
         super(element, config)
         this.init()
+    }
+
+    public get isShown () {
+        return !this._targetElement?.classList.contains(Tooltip.DEFAULT.class.hidden) ?? false
+    }
+
+    public get isClickTrigger () {
+        return this.config.trigger === 'click'
+    }
+
+    public show (): void {
+        this.computeTooltipPosition()
+        this.dispatchEvent(Tooltip.EVENTS.show)
+
+        if (this._targetElement != null && this._element != null) {
+            this._targetElement.classList.remove(Tooltip.DEFAULT.class.hidden)
+            this._targetElement.classList.remove(Tooltip.DEFAULT.class.opacity0)
+            setTimeout(() => {
+                this._element!.classList.add(Tooltip.DEFAULT.class.open)
+                this._targetElement!.classList.add(Tooltip.DEFAULT.class.open)
+                this._targetElement!.classList.add(Tooltip.DEFAULT.class.opacity100)
+            }, 1)
+        }
+        this.dispatchEvent(Tooltip.EVENTS.shown)
+    }
+
+    public hide (): void {
+
+        this.dispatchEvent(Tooltip.EVENTS.hide)
+
+        if (this._targetElement != null) {
+            this._element?.classList.remove(Tooltip.DEFAULT.class.open)
+            this._targetElement!.classList.add(Tooltip.DEFAULT.class.opacity0)
+            this._targetElement!.classList.remove(Tooltip.DEFAULT.class.opacity100)
+            this._targetElement!.classList.add(Tooltip.DEFAULT.class.hidden)
+        }
+
+        this.dispatchEvent(Tooltip.EVENTS.hidden)
+    }
+
+    public toggle (): void {
+        this.isShown ? this.hide() : this.show()
     }
 
     private init () {
@@ -102,52 +144,10 @@ export default class Tooltip extends BaseComponent<TooltipOption> {
         }
     }
 
-    public get isShown () {
-        return !this._targetElement?.classList.contains(Tooltip.DEFAULT.class.hidden) ?? false
-    }
-
-    public get isClickTrigger () {
-        return this.config.trigger === 'click'
-    }
-
-    public show (): void {
-        this.computeTooltipPosition()
-        this.dispatchEvent(Tooltip.EVENTS.show)
-
-        if (this._targetElement != null && this._element != null) {
-            this._targetElement.classList.remove(Tooltip.DEFAULT.class.hidden)
-            this._targetElement.classList.remove(Tooltip.DEFAULT.class.opacity0)
-            setTimeout(() => {
-                this._element!.classList.add(Tooltip.DEFAULT.class.open)
-                this._targetElement!.classList.add(Tooltip.DEFAULT.class.open)
-                this._targetElement!.classList.add(Tooltip.DEFAULT.class.opacity100)
-            }, 1)
-        }
-        this.dispatchEvent(Tooltip.EVENTS.shown)
-    }
-
-    public hide (): void {
-
-        this.dispatchEvent(Tooltip.EVENTS.hide)
-
-        if (this._targetElement != null) {
-            this._element?.classList.remove(Tooltip.DEFAULT.class.open)
-            this._targetElement!.classList.add(Tooltip.DEFAULT.class.opacity0)
-            this._targetElement!.classList.remove(Tooltip.DEFAULT.class.opacity100)
-            this._targetElement!.classList.add(Tooltip.DEFAULT.class.hidden)
-        }
-
-        this.dispatchEvent(Tooltip.EVENTS.hidden)
-    }
-
-    public toggle (): void {
-        this.isShown ? this.hide() : this.show()
-    }
-
     // Helper
     private computeTooltipPosition () {
 
-        const middlewares = [offset(this._targetOffset), shift({ padding: 2 })]
+        const middlewares = [offset(this._targetOffset), shift({ padding: 2 }), flip({ fallbackStrategy: 'bestFit' })]
         if (this._arrowElement) {
             middlewares.push(arrow({ element: this._arrowElement }))
         }

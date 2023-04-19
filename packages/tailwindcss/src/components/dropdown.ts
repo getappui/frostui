@@ -11,7 +11,7 @@
 import BaseComponent from './base'
 import { type DropdownOption, type Placement } from '~/types'
 import { DomEngine } from '~/dom/engine'
-import { computePosition } from '@floating-ui/dom'
+import { computePosition, offset } from '@floating-ui/dom'
 
 export default class Dropdown extends BaseComponent<DropdownOption> {
 
@@ -36,7 +36,8 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
         attr: {
             target: 'data-fc-target',
             placement: 'data-fc-placement',
-            trigger: 'data-fc-trigger'
+            trigger: 'data-fc-trigger',
+            offset: 'data-fc-offset',
         }
     }
 
@@ -45,6 +46,12 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
 
     // Open dropdown via click or hover
     private clicked = false
+    private _targetOffset = 8
+
+    constructor (element: HTMLElement | string | null, config?: DropdownOption | null) {
+        super(element, config)
+        this.init()
+    }
 
     // Getters
     public get isShown (): boolean {
@@ -54,68 +61,6 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
     public get isHover (): boolean {
         return this.config.trigger === 'hover'
     };
-
-    constructor (element: HTMLElement | string | null, config?: DropdownOption | null) {
-        super(element, config)
-        this.init()
-    }
-
-    private init (): void {
-        if (this._element != null) {
-            this._targetElement = this.getTargetElement()
-
-            this.initOptions()
-            this.initListener()
-        }
-    }
-
-    private initOptions (): void {
-        this._targetElement?.classList.add(Dropdown.DEFAULT.class.base)
-        this.config.placement ??= (this._element?.getAttribute(Dropdown.DEFAULT.attr.placement) ?? 'bottom-start') as Placement
-        this.config.trigger ??= (this._element?.getAttribute(Dropdown.DEFAULT.attr.trigger) == 'hover' ? 'hover' : 'click')
-        if ((this._targetElement?.classList.contains(Dropdown.DEFAULT.class.hidden)) === false) {
-            this.show()
-        }
-    }
-
-    private initListener (): void {
-        this._element?.addEventListener('click', () => {
-            if (this._destroyed) return
-            if (!this.isHover) {
-                this.toggle()
-            } else {
-                this.clicked ? this.hide() : this.show()
-                this.clicked = !this.clicked
-            }
-        })
-
-        if (this.isHover) {
-            this._element?.addEventListener('mouseover', () => {
-                this.show()
-            })
-            window.addEventListener('mousemove', (event) => {
-                if (this._destroyed) return
-                if (this._targetElement != null && this._element != null && event.target instanceof HTMLElement) {
-                    if (!this.clicked &&
-                        !DomEngine.isElementSameOrContains(this._targetElement, event.target) &&
-                        !DomEngine.isElementSameOrContains(this._element, event.target)) {
-                        this.hide()
-                    }
-                }
-            })
-        }
-
-        // Click outside
-        window.addEventListener('click', (event) => {
-            if (this._destroyed) return
-            if ((this._targetElement != null) && (this._element != null) && event.target instanceof HTMLElement) {
-                if (!DomEngine.isElementSameOrContains(this._targetElement, event.target) &&
-                    !DomEngine.isElementSameOrContains(this._element, event.target)) {
-                    this.hide()
-                }
-            }
-        })
-    }
 
     public show (): void {
         this.dispatchEvent(Dropdown.EVENTS.show)
@@ -151,6 +96,69 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
         this.isShown ? this.hide() : this.show()
     }
 
+    private init (): void {
+        if (this._element != null) {
+            this._targetElement = this.getTargetElement()
+
+            this.initOptions()
+            this.initListener()
+        }
+    }
+
+    private initOptions (): void {
+        this._element?.classList.add(Dropdown.DEFAULT.class.base)
+        this._targetElement?.classList.add(Dropdown.DEFAULT.class.base)
+
+        this.config.placement ??= (this._element?.getAttribute(Dropdown.DEFAULT.attr.placement) ?? 'bottom-start') as Placement
+        this.config.trigger ??= (this._element?.getAttribute(Dropdown.DEFAULT.attr.trigger) == 'hover' ? 'hover' : 'click')
+        if ((this._targetElement?.classList.contains(Dropdown.DEFAULT.class.hidden)) === false) {
+            this.show()
+        }
+
+        if (this._element?.hasAttribute(Dropdown.DEFAULT.attr.offset)) {
+            const offsetData = this._element!.getAttribute(Dropdown.DEFAULT.attr.offset)
+            if (!isNaN(parseInt(offsetData!))) {
+                this._targetOffset = parseInt(offsetData!)
+            }
+        }
+    }
+
+    private initListener (): void {
+        this._element?.addEventListener('click', () => {
+            if (this._destroyed) return
+            if (!this.isHover) {
+                this.toggle()
+            } else {
+                this.clicked ? this.hide() : this.show()
+                this.clicked = !this.clicked
+            }
+        })
+
+        if (this.isHover) {
+            this._element?.addEventListener('mouseover', () => {
+                this.show()
+            })
+            window.addEventListener('mousemove', (event) => {
+                if (this._destroyed) return
+                if (this._targetElement != null && this._element != null && event.target instanceof HTMLElement) {
+                    if (!this.clicked && !DomEngine.isElementSameOrContains(this._targetElement, event.target) && !DomEngine.isElementSameOrContains(this._element, event.target)) {
+                        this.hide()
+                    }
+                }
+            })
+        }
+
+        // Click outside
+        window.addEventListener('click', (event) => {
+            if (this._destroyed) return
+            if ((this._targetElement != null) && (this._element != null) && event.target instanceof HTMLElement) {
+                if (!DomEngine.isElementSameOrContains(this._targetElement, event.target) && !DomEngine.isElementSameOrContains(this._element, event.target)) {
+                    this.hide()
+                }
+            }
+        })
+    }
+
     private keyListener = (e: KeyboardEvent) => {
         if (e.key == 'Escape') {
             this.hide()
@@ -159,11 +167,15 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
 
     // Helper
     private addComputePositionInTargetElement (): void {
+        console.info(this._targetOffset)
+        const middlewares = [offset(this._targetOffset)]
+
         if (this._element != null && this._targetElement != null) {
             this._targetElement.classList.add('absolute')
 
             computePosition(this._element, this._targetElement, {
-                placement: this.config.placement
+                placement: this.config.placement,
+                middleware: middlewares
             }).then(({
                 x,
                 y

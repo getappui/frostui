@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite'
-
+import path from 'path'
 import typescript from '@rollup/plugin-typescript'
 import { typescriptPaths } from 'rollup-plugin-typescript-paths'
-
-const path = require('path')
 
 export default defineConfig({
 	plugins: [],

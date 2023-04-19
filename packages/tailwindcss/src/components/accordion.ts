@@ -50,7 +50,7 @@ export default class Accordion extends BaseComponent<AccordionOption> {
                     .map((e) => Collapse.getInstanceOrCreate<Collapse>(e)!)
             }
 
-            //TODO: In Dev: Auto discover mode
+            // TODO: In Dev: Auto discover mode
             // this.targetCollapses = DomEngine.findOnlyChildrenInElement(this._element, Collapse.SELECTOR)
             //     .map((e) => Collapse.getInstanceOrCreate<Collapse>(e)!)
 

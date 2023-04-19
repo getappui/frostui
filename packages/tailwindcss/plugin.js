@@ -1,5 +1,6 @@
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin'
 const colors = require('tailwindcss/colors')
+
 
 const colorConfig = {
   theme: {
@@ -34,7 +35,7 @@ const colorConfig = {
   },
 }
 
-module.exports = plugin.withOptions(function (options = {}) {
+module.exports = plugin.withOptions(function () {
   return function ({
     addVariant,
     e
@@ -71,6 +72,13 @@ module.exports = plugin.withOptions(function (options = {}) {
       modifySelectors(({ className }) => {
         return `.fc-dropdown.open.${e(`fc-dropdown-open${separator}${className}`)}`
       })
+    }, ({
+      modifySelectors,
+      separator
+    }) => {
+      modifySelectors(({ className }) => {
+        return `.fc-dropdown.open .${e(`fc-dropdown-open${separator}${className}`)}`
+      })
     }])
 
     addVariant('fc-modal-open', [({
@@ -105,9 +113,6 @@ module.exports = plugin.withOptions(function (options = {}) {
     }])
   }
 }, function (options = {}) {
-  const colors = options.colors ?? true
-  if (colors) {
-    return colorConfig
-  }
-  return {}
+  const colors = options.colors?.enable ?? false
+  return colors ? colorConfig : {}
 })

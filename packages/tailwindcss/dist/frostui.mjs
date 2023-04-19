@@ -1,37 +1,37 @@
-var Bt = Object.defineProperty;
-var Wt = (e, i, t) => i in e ? Bt(e, i, { enumerable: !0, configurable: !0, writable: !0, value: t }) : e[i] = t;
-var d = (e, i, t) => (Wt(e, typeof i != "symbol" ? i + "" : i, t), t);
-const z = /* @__PURE__ */ new Map(), ht = {
+var te = Object.defineProperty;
+var ee = (e, i, t) => i in e ? te(e, i, { enumerable: !0, configurable: !0, writable: !0, value: t }) : e[i] = t;
+var d = (e, i, t) => (ee(e, typeof i != "symbol" ? i + "" : i, t), t);
+const rt = /* @__PURE__ */ new Map(), vt = {
   set(e, i, t) {
-    z.has(e) || z.set(e, /* @__PURE__ */ new Map()), z.get(e).set(i, t);
+    rt.has(e) || rt.set(e, /* @__PURE__ */ new Map()), rt.get(e).set(i, t);
   },
   get(e, i) {
     var t;
-    return ((t = z.get(e)) == null ? void 0 : t.get(i)) || null;
+    return ((t = rt.get(e)) == null ? void 0 : t.get(i)) || null;
   },
   remove(e, i) {
     var t;
-    return ((t = z.get(e)) == null ? void 0 : t.delete(i)) || !0;
+    return ((t = rt.get(e)) == null ? void 0 : t.delete(i)) || !0;
   }
-}, q = /* @__PURE__ */ new Map(), dt = {
+}, et = /* @__PURE__ */ new Map(), Tt = {
   addListener(e, i, t) {
-    q.has(e) || q.set(e, /* @__PURE__ */ new Map());
-    const n = q.get(e);
+    et.has(e) || et.set(e, /* @__PURE__ */ new Map());
+    const n = et.get(e);
     let s = n.get(i);
     s == null && (s = []), s.push(t), n.set(i, s);
   },
   removeListener(e, i, t) {
-    if (!q.has(e))
+    if (!et.has(e))
       return;
-    const n = q.get(e);
+    const n = et.get(e);
     let s = n.get(i);
-    s != null && (s = s.filter((l) => l != t), n.set(i, s));
+    s != null && (s = s.filter((r) => r != t), n.set(i, s));
   },
   getCallbacks(e, i) {
     var t;
-    return ((t = q.get(e)) == null ? void 0 : t.get(i)) ?? [];
+    return ((t = et.get(e)) == null ? void 0 : t.get(i)) ?? [];
   }
-}, E = {
+}, v = {
   findAll(e) {
     return Array.from(document.querySelectorAll(e));
   },
@@ -78,18 +78,18 @@ const z = /* @__PURE__ */ new Map(), ht = {
     return e.contains(i) && e != i;
   }
 };
-class $ {
+class I {
   constructor(i, t) {
     d(this, "_element");
     d(this, "_destroyed", !1);
     d(this, "_config", {});
-    typeof i == "string" ? this._element = E.findOrById(i) : this._element = i, this._config = t ?? {}, this._element != null && ht.set(this.constructor.type, this._element, this);
+    typeof i == "string" ? this._element = v.findOrById(i) : this._element = i, this._config = t ?? {}, this._element != null && vt.set(this.constructor.type, this._element, this);
   }
   get config() {
     return this._config ?? {};
   }
   static getInstance(i) {
-    return i == null ? null : ht.get(this.type, i);
+    return i == null ? null : vt.get(this.type, i);
   }
   static getInstanceOrCreate(i, t) {
     if (i == null)
@@ -98,20 +98,20 @@ class $ {
     return n ?? new this(i, t);
   }
   addEventListener(i, t) {
-    dt.addListener(this, i, t);
+    Tt.addListener(this, i, t);
   }
   removeEventListener(i, t) {
-    dt.removeListener(this, i, t);
+    Tt.removeListener(this, i, t);
   }
   dispatchEvent(i) {
-    dt.getCallbacks(this, i).forEach((t) => t());
+    Tt.getCallbacks(this, i).forEach((t) => t());
   }
   destroy() {
-    this._destroyed = !0, this._element != null && ht.remove(this.constructor.type, this._element);
+    this._destroyed = !0, this._element != null && vt.remove(this.constructor.type, this._element);
   }
 }
-d($, "type", "");
-const et = {
+d(I, "type", "");
+const gt = {
   addAfterEvent(e, i, t) {
     const n = (s) => {
       i(s), e.removeEventListener(t, n, !0);
@@ -130,19 +130,19 @@ const et = {
   },
   listenOverlayClick(e) {
     var i;
-    (i = E.getOverlay()) == null || i.addEventListener("click", e);
+    (i = v.getOverlay()) == null || i.addEventListener("click", e);
   }
-}, _ = class extends $ {
+}, D = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_targetElement", null);
     this.init();
   }
   init() {
-    this._element != null && (this._element.classList.add(_.DEFAULT.class.base), this._targetElement = this.getTargetElement()), this.initOptions(), this.initListener();
+    this._element != null && (this._element.classList.add(D.DEFAULT.class.base), this._targetElement = this.getTargetElement()), this.initOptions(), this.initListener();
   }
   initOptions() {
-    this._targetElement != null && !this._targetElement.classList.contains(_.DEFAULT.class.hidden) && this._element.classList.add(_.DEFAULT.class.open), this.config.toggle && this.toggle();
+    this._targetElement != null && !this._targetElement.classList.contains(D.DEFAULT.class.hidden) && this._element.classList.add(D.DEFAULT.class.open), this.config.toggle && this.toggle();
   }
   initListener() {
     this._element.addEventListener("click", () => {
@@ -151,19 +151,19 @@ const et = {
   }
   get isShown() {
     var t;
-    return ((t = this._element) == null ? void 0 : t.classList.contains(_.DEFAULT.class.open)) ?? !1;
+    return ((t = this._element) == null ? void 0 : t.classList.contains(D.DEFAULT.class.open)) ?? !1;
   }
   show() {
-    this._destroyed || (this.dispatchEvent(_.EVENTS.show), this._targetElement != null && this._element != null && (this._element.classList.add(_.DEFAULT.class.open), this._targetElement.classList.remove(_.DEFAULT.class.hidden), this._targetElement.style.height = "0px", this._targetElement.style.height = `${this._targetElement.scrollHeight}px`, et.afterTransition(this._targetElement, () => {
+    this._destroyed || (this.dispatchEvent(D.EVENTS.show), this._targetElement != null && this._element != null && (this._element.classList.add(D.DEFAULT.class.open), this._targetElement.classList.remove(D.DEFAULT.class.hidden), this._targetElement.style.height = "0px", this._targetElement.style.height = `${this._targetElement.scrollHeight}px`, gt.afterTransition(this._targetElement, () => {
       this.isShown && (this._targetElement.style.height = "");
-    })), this.dispatchEvent(_.EVENTS.shown));
+    })), this.dispatchEvent(D.EVENTS.shown));
   }
   hide() {
-    this._destroyed || (this.dispatchEvent(_.EVENTS.hide), this._targetElement != null && this._element != null && (this._element.classList.remove(_.DEFAULT.class.open), this._targetElement.style.height = `${this._targetElement.scrollHeight}px`, et.afterTransition(this._targetElement, () => {
-      this.isShown || (this._targetElement.classList.add(_.DEFAULT.class.hidden), this._targetElement.style.height = "");
+    this._destroyed || (this.dispatchEvent(D.EVENTS.hide), this._targetElement != null && this._element != null && (this._element.classList.remove(D.DEFAULT.class.open), this._targetElement.style.height = `${this._targetElement.scrollHeight}px`, gt.afterTransition(this._targetElement, () => {
+      this.isShown || (this._targetElement.classList.add(D.DEFAULT.class.hidden), this._targetElement.style.height = "");
     }), setTimeout(() => {
       this._targetElement.style.height = "0px";
-    })), this.dispatchEvent(_.EVENTS.hidden));
+    })), this.dispatchEvent(D.EVENTS.hidden));
   }
   toggle() {
     this.isShown ? this.hide() : this.show();
@@ -171,17 +171,17 @@ const et = {
   getTargetElement() {
     if (this._element == null)
       return null;
-    const t = this.config.target ?? this._element.getAttribute(_.DEFAULT.attr.target);
-    return typeof t == "string" ? E.findOrById(t) : t instanceof HTMLElement ? t : E.nextElementSibling(this._element);
+    const t = this.config.target ?? this._element.getAttribute(D.DEFAULT.attr.target);
+    return typeof t == "string" ? v.findOrById(t) : t instanceof HTMLElement ? t : v.nextElementSibling(this._element);
   }
 };
-let S = _;
-d(S, "type", "collapse"), d(S, "SELECTOR", '[data-fc-type="collapse"]'), d(S, "EVENTS", {
+let O = D;
+d(O, "type", "collapse"), d(O, "SELECTOR", '[data-fc-type="collapse"]'), d(O, "EVENTS", {
   show: "fc.collapse.show",
   shown: "fc.collapse.shown",
   hide: "fc.collapse.hide",
   hidden: "fc.collapse.hidden"
-}), d(S, "DEFAULT", {
+}), d(O, "DEFAULT", {
   class: {
     base: "fc-collapse",
     hidden: "hidden",
@@ -191,7 +191,7 @@ d(S, "type", "collapse"), d(S, "SELECTOR", '[data-fc-type="collapse"]'), d(S, "E
     target: "data-fc-target"
   }
 });
-const st = class extends $ {
+const pt = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "targetCollapses", []);
@@ -199,371 +199,438 @@ const st = class extends $ {
   }
   init() {
     if (this._element != null) {
-      const t = E.findAllInElement(this._element, S.SELECTOR);
+      const t = v.findAllInElement(this._element, O.SELECTOR);
       let n = !1;
       for (let s of t)
-        if (s.hasAttribute(st.DEFAULT.attr.parent)) {
+        if (s.hasAttribute(pt.DEFAULT.attr.parent)) {
           n = !0;
           break;
         }
       if (!n)
-        this.targetCollapses = t.map((s) => S.getInstanceOrCreate(s));
+        this.targetCollapses = t.map((s) => O.getInstanceOrCreate(s));
       else {
         const s = this._element.id;
-        this.targetCollapses = t.filter((l) => l.getAttribute(st.DEFAULT.attr.parent) == s).map((l) => S.getInstanceOrCreate(l));
+        this.targetCollapses = t.filter((r) => r.getAttribute(pt.DEFAULT.attr.parent) == s).map((r) => O.getInstanceOrCreate(r));
       }
       this.initListeners();
     }
   }
   initListeners() {
     this.targetCollapses.forEach((t) => {
-      t.addEventListener(S.EVENTS.show, () => {
+      t.addEventListener(O.EVENTS.show, () => {
         this._destroyed || this.targetCollapses.filter((n) => n != t).forEach((n) => n.hide());
       });
     });
   }
 };
-let B = st;
-d(B, "type", "accordion"), d(B, "SELECTOR", '[data-fc-type="accordion"]'), d(B, "DEFAULT", {
+let Q = pt;
+d(Q, "type", "accordion"), d(Q, "SELECTOR", '[data-fc-type="accordion"]'), d(Q, "DEFAULT", {
   attr: {
     parent: "data-fc-parent"
   }
 });
-function ut(e) {
+function ht(e) {
   return e.split("-")[1];
 }
-function At(e) {
+function St(e) {
   return e === "y" ? "height" : "width";
 }
-function lt(e) {
+function tt(e) {
   return e.split("-")[0];
 }
-function rt(e) {
-  return ["top", "bottom"].includes(lt(e)) ? "x" : "y";
+function dt(e) {
+  return ["top", "bottom"].includes(tt(e)) ? "x" : "y";
 }
-function Lt(e, i, t) {
+function Ot(e, i, t) {
   let { reference: n, floating: s } = e;
-  const l = n.x + n.width / 2 - s.width / 2, r = n.y + n.height / 2 - s.height / 2, o = rt(i), h = At(o), c = n[h] / 2 - s[h] / 2, f = o === "x";
-  let a;
-  switch (lt(i)) {
+  const r = n.x + n.width / 2 - s.width / 2, l = n.y + n.height / 2 - s.height / 2, a = dt(i), h = St(a), o = n[h] / 2 - s[h] / 2, f = a === "x";
+  let c;
+  switch (tt(i)) {
     case "top":
-      a = { x: l, y: n.y - s.height };
+      c = { x: r, y: n.y - s.height };
       break;
     case "bottom":
-      a = { x: l, y: n.y + n.height };
+      c = { x: r, y: n.y + n.height };
       break;
     case "right":
-      a = { x: n.x + n.width, y: r };
+      c = { x: n.x + n.width, y: l };
       break;
     case "left":
-      a = { x: n.x - s.width, y: r };
+      c = { x: n.x - s.width, y: l };
       break;
     default:
-      a = { x: n.x, y: n.y };
+      c = { x: n.x, y: n.y };
   }
-  switch (ut(i)) {
+  switch (ht(i)) {
     case "start":
-      a[o] -= c * (t && f ? -1 : 1);
+      c[a] -= o * (t && f ? -1 : 1);
       break;
     case "end":
-      a[o] += c * (t && f ? -1 : 1);
+      c[a] += o * (t && f ? -1 : 1);
   }
-  return a;
+  return c;
 }
-const It = async (e, i, t) => {
-  const { placement: n = "bottom", strategy: s = "absolute", middleware: l = [], platform: r } = t, o = l.filter(Boolean), h = await (r.isRTL == null ? void 0 : r.isRTL(i));
-  let c = await r.getElementRects({ reference: e, floating: i, strategy: s }), { x: f, y: a } = Lt(c, n, h), g = n, m = {}, p = 0;
-  for (let u = 0; u < o.length; u++) {
-    const { name: y, fn: w } = o[u], { x: v, y: x, data: F, reset: k } = await w({ x: f, y: a, initialPlacement: n, placement: g, strategy: s, middlewareData: m, rects: c, platform: r, elements: { reference: e, floating: i } });
-    f = v ?? f, a = x ?? a, m = { ...m, [y]: { ...m[y], ...F } }, k && p <= 50 && (p++, typeof k == "object" && (k.placement && (g = k.placement), k.rects && (c = k.rects === !0 ? await r.getElementRects({ reference: e, floating: i, strategy: s }) : k.rects), { x: f, y: a } = Lt(c, g, h)), u = -1);
+const ie = async (e, i, t) => {
+  const { placement: n = "bottom", strategy: s = "absolute", middleware: r = [], platform: l } = t, a = r.filter(Boolean), h = await (l.isRTL == null ? void 0 : l.isRTL(i));
+  let o = await l.getElementRects({ reference: e, floating: i, strategy: s }), { x: f, y: c } = Ot(o, n, h), g = n, m = {}, E = 0;
+  for (let u = 0; u < a.length; u++) {
+    const { name: p, fn: L } = a[u], { x: y, y: T, data: F, reset: S } = await L({ x: f, y: c, initialPlacement: n, placement: g, strategy: s, middlewareData: m, rects: o, platform: l, elements: { reference: e, floating: i } });
+    f = y ?? f, c = T ?? c, m = { ...m, [p]: { ...m[p], ...F } }, S && E <= 50 && (E++, typeof S == "object" && (S.placement && (g = S.placement), S.rects && (o = S.rects === !0 ? await l.getElementRects({ reference: e, floating: i, strategy: s }) : S.rects), { x: f, y: c } = Ot(o, g, h)), u = -1);
   }
-  return { x: f, y: a, placement: g, strategy: s, middlewareData: m };
+  return { x: f, y: c, placement: g, strategy: s, middlewareData: m };
 };
-function _t(e) {
+function Ht(e) {
   return typeof e != "number" ? function(i) {
     return { top: 0, right: 0, bottom: 0, left: 0, ...i };
   }(e) : { top: e, right: e, bottom: e, left: e };
 }
-function it(e) {
+function mt(e) {
   return { ...e, top: e.y, left: e.x, right: e.x + e.width, bottom: e.y + e.height };
 }
-async function Mt(e, i) {
+async function It(e, i) {
   var t;
   i === void 0 && (i = {});
-  const { x: n, y: s, platform: l, rects: r, elements: o, strategy: h } = e, { boundary: c = "clippingAncestors", rootBoundary: f = "viewport", elementContext: a = "floating", altBoundary: g = !1, padding: m = 0 } = i, p = _t(m), u = o[g ? a === "floating" ? "reference" : "floating" : a], y = it(await l.getClippingRect({ element: (t = await (l.isElement == null ? void 0 : l.isElement(u))) == null || t ? u : u.contextElement || await (l.getDocumentElement == null ? void 0 : l.getDocumentElement(o.floating)), boundary: c, rootBoundary: f, strategy: h })), w = a === "floating" ? { ...r.floating, x: n, y: s } : r.reference, v = await (l.getOffsetParent == null ? void 0 : l.getOffsetParent(o.floating)), x = await (l.isElement == null ? void 0 : l.isElement(v)) && await (l.getScale == null ? void 0 : l.getScale(v)) || { x: 1, y: 1 }, F = it(l.convertOffsetParentRelativeRectToViewportRelativeRect ? await l.convertOffsetParentRelativeRectToViewportRelativeRect({ rect: w, offsetParent: v, strategy: h }) : w);
-  return { top: (y.top - F.top + p.top) / x.y, bottom: (F.bottom - y.bottom + p.bottom) / x.y, left: (y.left - F.left + p.left) / x.x, right: (F.right - y.right + p.right) / x.x };
+  const { x: n, y: s, platform: r, rects: l, elements: a, strategy: h } = e, { boundary: o = "clippingAncestors", rootBoundary: f = "viewport", elementContext: c = "floating", altBoundary: g = !1, padding: m = 0 } = i, E = Ht(m), u = a[g ? c === "floating" ? "reference" : "floating" : c], p = mt(await r.getClippingRect({ element: (t = await (r.isElement == null ? void 0 : r.isElement(u))) == null || t ? u : u.contextElement || await (r.getDocumentElement == null ? void 0 : r.getDocumentElement(a.floating)), boundary: o, rootBoundary: f, strategy: h })), L = c === "floating" ? { ...l.floating, x: n, y: s } : l.reference, y = await (r.getOffsetParent == null ? void 0 : r.getOffsetParent(a.floating)), T = await (r.isElement == null ? void 0 : r.isElement(y)) && await (r.getScale == null ? void 0 : r.getScale(y)) || { x: 1, y: 1 }, F = mt(r.convertOffsetParentRelativeRectToViewportRelativeRect ? await r.convertOffsetParentRelativeRectToViewportRelativeRect({ rect: L, offsetParent: y, strategy: h }) : L);
+  return { top: (p.top - F.top + E.top) / T.y, bottom: (F.bottom - p.bottom + E.bottom) / T.y, left: (p.left - F.left + E.left) / T.x, right: (F.right - p.right + E.right) / T.x };
 }
-const Pt = Math.min, jt = Math.max;
-function ft(e, i, t) {
-  return jt(e, Pt(i, t));
+const ne = Math.min, se = Math.max;
+function xt(e, i, t) {
+  return se(e, ne(i, t));
 }
-const qt = (e) => ({ name: "arrow", options: e, async fn(i) {
-  const { element: t, padding: n = 0 } = e || {}, { x: s, y: l, placement: r, rects: o, platform: h, elements: c } = i;
+const le = (e) => ({ name: "arrow", options: e, async fn(i) {
+  const { element: t, padding: n = 0 } = e || {}, { x: s, y: r, placement: l, rects: a, platform: h, elements: o } = i;
   if (t == null)
     return {};
-  const f = _t(n), a = { x: s, y: l }, g = rt(r), m = At(g), p = await h.getDimensions(t), u = g === "y", y = u ? "top" : "left", w = u ? "bottom" : "right", v = u ? "clientHeight" : "clientWidth", x = o.reference[m] + o.reference[g] - a[g] - o.floating[m], F = a[g] - o.reference[g], k = await (h.getOffsetParent == null ? void 0 : h.getOffsetParent(t));
-  let Q = k ? k[v] : 0;
-  Q && await (h.isElement == null ? void 0 : h.isElement(k)) || (Q = c.floating[v] || o.floating[m]);
-  const Ht = x / 2 - F / 2, Z = f[y], yt = Q - p[m] - f[w], j = Q / 2 - p[m] / 2 + Ht, ct = ft(Z, j, yt), $t = ut(r) != null && j != ct && o.reference[m] / 2 - (j < Z ? f[y] : f[w]) - p[m] / 2 < 0;
-  return { [g]: a[g] - ($t ? j < Z ? Z - j : yt - j : 0), data: { [g]: ct, centerOffset: j - ct } };
-} }), Xt = ["top", "right", "bottom", "left"];
-Xt.reduce((e, i) => e.concat(i, i + "-start", i + "-end"), []);
-const Yt = function(e) {
+  const f = Ht(n), c = { x: s, y: r }, g = dt(l), m = St(g), E = await h.getDimensions(t), u = g === "y", p = u ? "top" : "left", L = u ? "bottom" : "right", y = u ? "clientHeight" : "clientWidth", T = a.reference[m] + a.reference[g] - c[g] - a.floating[m], F = c[g] - a.reference[g], S = await (h.getOffsetParent == null ? void 0 : h.getOffsetParent(t));
+  let $ = S ? S[y] : 0;
+  $ && await (h.isElement == null ? void 0 : h.isElement(S)) || ($ = o.floating[y] || a.floating[m]);
+  const G = T / 2 - F / 2, J = f[p], st = $ - E[m] - f[L], V = $ / 2 - E[m] / 2 + G, _ = xt(J, V, st), C = ht(l) != null && V != _ && a.reference[m] / 2 - (V < J ? f[p] : f[L]) - E[m] / 2 < 0;
+  return { [g]: c[g] - (C ? V < J ? J - V : st - V : 0), data: { [g]: _, centerOffset: V - _ } };
+} }), re = ["top", "right", "bottom", "left"];
+re.reduce((e, i) => e.concat(i, i + "-start", i + "-end"), []);
+const ae = { left: "right", right: "left", bottom: "top", top: "bottom" };
+function ut(e) {
+  return e.replace(/left|right|bottom|top/g, (i) => ae[i]);
+}
+function oe(e, i, t) {
+  t === void 0 && (t = !1);
+  const n = ht(e), s = dt(e), r = St(s);
+  let l = s === "x" ? n === (t ? "end" : "start") ? "right" : "left" : n === "start" ? "bottom" : "top";
+  return i.reference[r] > i.floating[r] && (l = ut(l)), { main: l, cross: ut(l) };
+}
+const ce = { start: "end", end: "start" };
+function bt(e) {
+  return e.replace(/start|end/g, (i) => ce[i]);
+}
+const he = function(e) {
+  return e === void 0 && (e = {}), { name: "flip", options: e, async fn(i) {
+    var t;
+    const { placement: n, middlewareData: s, rects: r, initialPlacement: l, platform: a, elements: h } = i, { mainAxis: o = !0, crossAxis: f = !0, fallbackPlacements: c, fallbackStrategy: g = "bestFit", fallbackAxisSideDirection: m = "none", flipAlignment: E = !0, ...u } = e, p = tt(n), L = tt(l) === l, y = await (a.isRTL == null ? void 0 : a.isRTL(h.floating)), T = c || (L || !E ? [ut(l)] : function(_) {
+      const C = ut(_);
+      return [bt(_), C, bt(C)];
+    }(l));
+    c || m === "none" || T.push(...function(_, C, K, P) {
+      const H = ht(_);
+      let U = function(lt, wt, Kt) {
+        const kt = ["left", "right"], Ut = ["right", "left"], Qt = ["top", "bottom"], Zt = ["bottom", "top"];
+        switch (lt) {
+          case "top":
+          case "bottom":
+            return Kt ? wt ? Ut : kt : wt ? kt : Ut;
+          case "left":
+          case "right":
+            return wt ? Qt : Zt;
+          default:
+            return [];
+        }
+      }(tt(_), K === "start", P);
+      return H && (U = U.map((lt) => lt + "-" + H), C && (U = U.concat(U.map(bt)))), U;
+    }(l, E, m, y));
+    const F = [l, ...T], S = await It(i, u), $ = [];
+    let G = ((t = s.flip) == null ? void 0 : t.overflows) || [];
+    if (o && $.push(S[p]), f) {
+      const { main: _, cross: C } = oe(n, r, y);
+      $.push(S[_], S[C]);
+    }
+    if (G = [...G, { placement: n, overflows: $ }], !$.every((_) => _ <= 0)) {
+      var J, st;
+      const _ = (((J = s.flip) == null ? void 0 : J.index) || 0) + 1, C = F[_];
+      if (C)
+        return { data: { index: _, overflows: G }, reset: { placement: C } };
+      let K = (st = G.filter((P) => P.overflows[0] <= 0).sort((P, H) => P.overflows[1] - H.overflows[1])[0]) == null ? void 0 : st.placement;
+      if (!K)
+        switch (g) {
+          case "bestFit": {
+            var V;
+            const P = (V = G.map((H) => [H.placement, H.overflows.filter((U) => U > 0).reduce((U, lt) => U + lt, 0)]).sort((H, U) => H[1] - U[1])[0]) == null ? void 0 : V[0];
+            P && (K = P);
+            break;
+          }
+          case "initialPlacement":
+            K = l;
+        }
+      if (n !== K)
+        return { reset: { placement: K } };
+    }
+    return {};
+  } };
+}, Pt = function(e) {
   return e === void 0 && (e = 0), { name: "offset", options: e, async fn(i) {
-    const { x: t, y: n } = i, s = await async function(l, r) {
-      const { placement: o, platform: h, elements: c } = l, f = await (h.isRTL == null ? void 0 : h.isRTL(c.floating)), a = lt(o), g = ut(o), m = rt(o) === "x", p = ["left", "top"].includes(a) ? -1 : 1, u = f && m ? -1 : 1, y = typeof r == "function" ? r(l) : r;
-      let { mainAxis: w, crossAxis: v, alignmentAxis: x } = typeof y == "number" ? { mainAxis: y, crossAxis: 0, alignmentAxis: null } : { mainAxis: 0, crossAxis: 0, alignmentAxis: null, ...y };
-      return g && typeof x == "number" && (v = g === "end" ? -1 * x : x), m ? { x: v * u, y: w * p } : { x: w * p, y: v * u };
+    const { x: t, y: n } = i, s = await async function(r, l) {
+      const { placement: a, platform: h, elements: o } = r, f = await (h.isRTL == null ? void 0 : h.isRTL(o.floating)), c = tt(a), g = ht(a), m = dt(a) === "x", E = ["left", "top"].includes(c) ? -1 : 1, u = f && m ? -1 : 1, p = typeof l == "function" ? l(r) : l;
+      let { mainAxis: L, crossAxis: y, alignmentAxis: T } = typeof p == "number" ? { mainAxis: p, crossAxis: 0, alignmentAxis: null } : { mainAxis: 0, crossAxis: 0, alignmentAxis: null, ...p };
+      return g && typeof T == "number" && (y = g === "end" ? -1 * T : T), m ? { x: y * u, y: L * E } : { x: L * E, y: y * u };
     }(i, e);
     return { x: t + s.x, y: n + s.y, data: s };
   } };
 };
-function zt(e) {
+function de(e) {
   return e === "x" ? "y" : "x";
 }
-const Gt = function(e) {
+const fe = function(e) {
   return e === void 0 && (e = {}), { name: "shift", options: e, async fn(i) {
-    const { x: t, y: n, placement: s } = i, { mainAxis: l = !0, crossAxis: r = !1, limiter: o = { fn: (y) => {
-      let { x: w, y: v } = y;
-      return { x: w, y: v };
-    } }, ...h } = e, c = { x: t, y: n }, f = await Mt(i, h), a = rt(lt(s)), g = zt(a);
-    let m = c[a], p = c[g];
-    if (l) {
-      const y = a === "y" ? "bottom" : "right";
-      m = ft(m + f[a === "y" ? "top" : "left"], m, m - f[y]);
-    }
+    const { x: t, y: n, placement: s } = i, { mainAxis: r = !0, crossAxis: l = !1, limiter: a = { fn: (p) => {
+      let { x: L, y } = p;
+      return { x: L, y };
+    } }, ...h } = e, o = { x: t, y: n }, f = await It(i, h), c = dt(tt(s)), g = de(c);
+    let m = o[c], E = o[g];
     if (r) {
-      const y = g === "y" ? "bottom" : "right";
-      p = ft(p + f[g === "y" ? "top" : "left"], p, p - f[y]);
+      const p = c === "y" ? "bottom" : "right";
+      m = xt(m + f[c === "y" ? "top" : "left"], m, m - f[p]);
     }
-    const u = o.fn({ ...i, [a]: m, [g]: p });
+    if (l) {
+      const p = g === "y" ? "bottom" : "right";
+      E = xt(E + f[g === "y" ? "top" : "left"], E, E - f[p]);
+    }
+    const u = a.fn({ ...i, [c]: m, [g]: E });
     return { ...u, data: { x: u.x - t, y: u.y - n } };
   } };
 };
-function D(e) {
+function k(e) {
   var i;
   return ((i = e.ownerDocument) == null ? void 0 : i.defaultView) || window;
 }
-function O(e) {
-  return D(e).getComputedStyle(e);
+function N(e) {
+  return k(e).getComputedStyle(e);
 }
-function St(e) {
-  return e instanceof D(e).Node;
+function Wt(e) {
+  return e instanceof k(e).Node;
 }
-function P(e) {
-  return St(e) ? (e.nodeName || "").toLowerCase() : "";
+function z(e) {
+  return Wt(e) ? (e.nodeName || "").toLowerCase() : "";
 }
-let tt;
-function Dt() {
-  if (tt)
-    return tt;
+let ft;
+function Bt() {
+  if (ft)
+    return ft;
   const e = navigator.userAgentData;
-  return e && Array.isArray(e.brands) ? (tt = e.brands.map((i) => i.brand + "/" + i.version).join(" "), tt) : navigator.userAgent;
+  return e && Array.isArray(e.brands) ? (ft = e.brands.map((i) => i.brand + "/" + i.version).join(" "), ft) : navigator.userAgent;
 }
-function U(e) {
-  return e instanceof D(e).HTMLElement;
+function R(e) {
+  return e instanceof k(e).HTMLElement;
 }
-function I(e) {
-  return e instanceof D(e).Element;
-}
-function wt(e) {
-  return typeof ShadowRoot > "u" ? !1 : e instanceof D(e).ShadowRoot || e instanceof ShadowRoot;
-}
-function ot(e) {
-  const { overflow: i, overflowX: t, overflowY: n, display: s } = O(e);
-  return /auto|scroll|overlay|hidden|clip/.test(i + n + t) && !["inline", "contents"].includes(s);
-}
-function Jt(e) {
-  return ["table", "td", "th"].includes(P(e));
-}
-function gt(e) {
-  const i = /firefox/i.test(Dt()), t = O(e), n = t.backdropFilter || t.WebkitBackdropFilter;
-  return t.transform !== "none" || t.perspective !== "none" || !!n && n !== "none" || i && t.willChange === "filter" || i && !!t.filter && t.filter !== "none" || ["transform", "perspective"].some((s) => t.willChange.includes(s)) || ["paint", "layout", "strict", "content"].some((s) => {
-    const l = t.contain;
-    return l != null && l.includes(s);
-  });
-}
-function mt() {
-  return /^((?!chrome|android).)*safari/i.test(Dt());
-}
-function Et(e) {
-  return ["html", "body", "#document"].includes(P(e));
-}
-const vt = Math.min, G = Math.max, nt = Math.round;
-function Ft(e) {
-  const i = O(e);
-  let t = parseFloat(i.width), n = parseFloat(i.height);
-  const s = U(e), l = s ? e.offsetWidth : t, r = s ? e.offsetHeight : n, o = nt(t) !== l || nt(n) !== r;
-  return o && (t = l, n = r), { width: t, height: n, fallback: o };
-}
-function kt(e) {
-  return I(e) ? e : e.contextElement;
-}
-const Ut = { x: 1, y: 1 };
-function Y(e) {
-  const i = kt(e);
-  if (!U(i))
-    return Ut;
-  const t = i.getBoundingClientRect(), { width: n, height: s, fallback: l } = Ft(i);
-  let r = (l ? nt(t.width) : t.width) / n, o = (l ? nt(t.height) : t.height) / s;
-  return r && Number.isFinite(r) || (r = 1), o && Number.isFinite(o) || (o = 1), { x: r, y: o };
-}
-function J(e, i, t, n) {
-  var s, l;
-  i === void 0 && (i = !1), t === void 0 && (t = !1);
-  const r = e.getBoundingClientRect(), o = kt(e);
-  let h = Ut;
-  i && (n ? I(n) && (h = Y(n)) : h = Y(e));
-  const c = o ? D(o) : window, f = mt() && t;
-  let a = (r.left + (f && ((s = c.visualViewport) == null ? void 0 : s.offsetLeft) || 0)) / h.x, g = (r.top + (f && ((l = c.visualViewport) == null ? void 0 : l.offsetTop) || 0)) / h.y, m = r.width / h.x, p = r.height / h.y;
-  if (o) {
-    const u = D(o), y = n && I(n) ? D(n) : n;
-    let w = u.frameElement;
-    for (; w && n && y !== u; ) {
-      const v = Y(w), x = w.getBoundingClientRect(), F = getComputedStyle(w);
-      x.x += (w.clientLeft + parseFloat(F.paddingLeft)) * v.x, x.y += (w.clientTop + parseFloat(F.paddingTop)) * v.y, a *= v.x, g *= v.y, m *= v.x, p *= v.y, a += x.x, g += x.y, w = D(w).frameElement;
-    }
-  }
-  return it({ width: m, height: p, x: a, y: g });
-}
-function M(e) {
-  return ((St(e) ? e.ownerDocument : e.document) || window.document).documentElement;
-}
-function at(e) {
-  return I(e) ? { scrollLeft: e.scrollLeft, scrollTop: e.scrollTop } : { scrollLeft: e.pageXOffset, scrollTop: e.pageYOffset };
-}
-function Ot(e) {
-  return J(M(e)).left + at(e).scrollLeft;
-}
-function K(e) {
-  if (P(e) === "html")
-    return e;
-  const i = e.assignedSlot || e.parentNode || wt(e) && e.host || M(e);
-  return wt(i) ? i.host : i;
+function X(e) {
+  return e instanceof k(e).Element;
 }
 function Ct(e) {
-  const i = K(e);
-  return Et(i) ? i.ownerDocument.body : U(i) && ot(i) ? i : Ct(i);
+  return typeof ShadowRoot > "u" ? !1 : e instanceof k(e).ShadowRoot || e instanceof ShadowRoot;
 }
-function Rt(e, i) {
+function yt(e) {
+  const { overflow: i, overflowX: t, overflowY: n, display: s } = N(e);
+  return /auto|scroll|overlay|hidden|clip/.test(i + n + t) && !["inline", "contents"].includes(s);
+}
+function ge(e) {
+  return ["table", "td", "th"].includes(z(e));
+}
+function At(e) {
+  const i = /firefox/i.test(Bt()), t = N(e), n = t.backdropFilter || t.WebkitBackdropFilter;
+  return t.transform !== "none" || t.perspective !== "none" || !!n && n !== "none" || i && t.willChange === "filter" || i && !!t.filter && t.filter !== "none" || ["transform", "perspective"].some((s) => t.willChange.includes(s)) || ["paint", "layout", "strict", "content"].some((s) => {
+    const r = t.contain;
+    return r != null && r.includes(s);
+  });
+}
+function _t() {
+  return /^((?!chrome|android).)*safari/i.test(Bt());
+}
+function Dt(e) {
+  return ["html", "body", "#document"].includes(z(e));
+}
+const Rt = Math.min, at = Math.max, Et = Math.round;
+function Mt(e) {
+  const i = N(e);
+  let t = parseFloat(i.width), n = parseFloat(i.height);
+  const s = R(e), r = s ? e.offsetWidth : t, l = s ? e.offsetHeight : n, a = Et(t) !== r || Et(n) !== l;
+  return a && (t = r, n = l), { width: t, height: n, fallback: a };
+}
+function jt(e) {
+  return X(e) ? e : e.contextElement;
+}
+const qt = { x: 1, y: 1 };
+function nt(e) {
+  const i = jt(e);
+  if (!R(i))
+    return qt;
+  const t = i.getBoundingClientRect(), { width: n, height: s, fallback: r } = Mt(i);
+  let l = (r ? Et(t.width) : t.width) / n, a = (r ? Et(t.height) : t.height) / s;
+  return l && Number.isFinite(l) || (l = 1), a && Number.isFinite(a) || (a = 1), { x: l, y: a };
+}
+function ot(e, i, t, n) {
+  var s, r;
+  i === void 0 && (i = !1), t === void 0 && (t = !1);
+  const l = e.getBoundingClientRect(), a = jt(e);
+  let h = qt;
+  i && (n ? X(n) && (h = nt(n)) : h = nt(e));
+  const o = a ? k(a) : window, f = _t() && t;
+  let c = (l.left + (f && ((s = o.visualViewport) == null ? void 0 : s.offsetLeft) || 0)) / h.x, g = (l.top + (f && ((r = o.visualViewport) == null ? void 0 : r.offsetTop) || 0)) / h.y, m = l.width / h.x, E = l.height / h.y;
+  if (a) {
+    const u = k(a), p = n && X(n) ? k(n) : n;
+    let L = u.frameElement;
+    for (; L && n && p !== u; ) {
+      const y = nt(L), T = L.getBoundingClientRect(), F = getComputedStyle(L);
+      T.x += (L.clientLeft + parseFloat(F.paddingLeft)) * y.x, T.y += (L.clientTop + parseFloat(F.paddingTop)) * y.y, c *= y.x, g *= y.y, m *= y.x, E *= y.y, c += T.x, g += T.y, L = k(L).frameElement;
+    }
+  }
+  return mt({ width: m, height: E, x: c, y: g });
+}
+function Y(e) {
+  return ((Wt(e) ? e.ownerDocument : e.document) || window.document).documentElement;
+}
+function Lt(e) {
+  return X(e) ? { scrollLeft: e.scrollLeft, scrollTop: e.scrollTop } : { scrollLeft: e.pageXOffset, scrollTop: e.pageYOffset };
+}
+function Xt(e) {
+  return ot(Y(e)).left + Lt(e).scrollLeft;
+}
+function ct(e) {
+  if (z(e) === "html")
+    return e;
+  const i = e.assignedSlot || e.parentNode || Ct(e) && e.host || Y(e);
+  return Ct(i) ? i.host : i;
+}
+function Yt(e) {
+  const i = ct(e);
+  return Dt(i) ? i.ownerDocument.body : R(i) && yt(i) ? i : Yt(i);
+}
+function zt(e, i) {
   var t;
   i === void 0 && (i = []);
-  const n = Ct(e), s = n === ((t = e.ownerDocument) == null ? void 0 : t.body), l = D(n);
-  return s ? i.concat(l, l.visualViewport || [], ot(n) ? n : []) : i.concat(n, Rt(n));
+  const n = Yt(e), s = n === ((t = e.ownerDocument) == null ? void 0 : t.body), r = k(n);
+  return s ? i.concat(r, r.visualViewport || [], yt(n) ? n : []) : i.concat(n, zt(n));
 }
-function Tt(e, i, t) {
+function Vt(e, i, t) {
   let n;
   if (i === "viewport")
-    n = function(r, o) {
-      const h = D(r), c = M(r), f = h.visualViewport;
-      let a = c.clientWidth, g = c.clientHeight, m = 0, p = 0;
+    n = function(l, a) {
+      const h = k(l), o = Y(l), f = h.visualViewport;
+      let c = o.clientWidth, g = o.clientHeight, m = 0, E = 0;
       if (f) {
-        a = f.width, g = f.height;
-        const u = mt();
-        (!u || u && o === "fixed") && (m = f.offsetLeft, p = f.offsetTop);
+        c = f.width, g = f.height;
+        const u = _t();
+        (!u || u && a === "fixed") && (m = f.offsetLeft, E = f.offsetTop);
       }
-      return { width: a, height: g, x: m, y: p };
+      return { width: c, height: g, x: m, y: E };
     }(e, t);
   else if (i === "document")
-    n = function(r) {
-      const o = M(r), h = at(r), c = r.ownerDocument.body, f = G(o.scrollWidth, o.clientWidth, c.scrollWidth, c.clientWidth), a = G(o.scrollHeight, o.clientHeight, c.scrollHeight, c.clientHeight);
-      let g = -h.scrollLeft + Ot(r);
+    n = function(l) {
+      const a = Y(l), h = Lt(l), o = l.ownerDocument.body, f = at(a.scrollWidth, a.clientWidth, o.scrollWidth, o.clientWidth), c = at(a.scrollHeight, a.clientHeight, o.scrollHeight, o.clientHeight);
+      let g = -h.scrollLeft + Xt(l);
       const m = -h.scrollTop;
-      return O(c).direction === "rtl" && (g += G(o.clientWidth, c.clientWidth) - f), { width: f, height: a, x: g, y: m };
-    }(M(e));
-  else if (I(i))
-    n = function(r, o) {
-      const h = J(r, !0, o === "fixed"), c = h.top + r.clientTop, f = h.left + r.clientLeft, a = U(r) ? Y(r) : { x: 1, y: 1 };
-      return { width: r.clientWidth * a.x, height: r.clientHeight * a.y, x: f * a.x, y: c * a.y };
+      return N(o).direction === "rtl" && (g += at(a.clientWidth, o.clientWidth) - f), { width: f, height: c, x: g, y: m };
+    }(Y(e));
+  else if (X(i))
+    n = function(l, a) {
+      const h = ot(l, !0, a === "fixed"), o = h.top + l.clientTop, f = h.left + l.clientLeft, c = R(l) ? nt(l) : { x: 1, y: 1 };
+      return { width: l.clientWidth * c.x, height: l.clientHeight * c.y, x: f * c.x, y: o * c.y };
     }(i, t);
   else {
-    const r = { ...i };
-    if (mt()) {
-      var s, l;
-      const o = D(e);
-      r.x -= ((s = o.visualViewport) == null ? void 0 : s.offsetLeft) || 0, r.y -= ((l = o.visualViewport) == null ? void 0 : l.offsetTop) || 0;
+    const l = { ...i };
+    if (_t()) {
+      var s, r;
+      const a = k(e);
+      l.x -= ((s = a.visualViewport) == null ? void 0 : s.offsetLeft) || 0, l.y -= ((r = a.visualViewport) == null ? void 0 : r.offsetTop) || 0;
     }
-    n = r;
+    n = l;
   }
-  return it(n);
+  return mt(n);
 }
-function bt(e, i) {
-  return U(e) && O(e).position !== "fixed" ? i ? i(e) : e.offsetParent : null;
+function Nt(e, i) {
+  return R(e) && N(e).position !== "fixed" ? i ? i(e) : e.offsetParent : null;
 }
-function xt(e, i) {
-  const t = D(e);
-  if (!U(e))
+function $t(e, i) {
+  const t = k(e);
+  if (!R(e))
     return t;
-  let n = bt(e, i);
-  for (; n && Jt(n) && O(n).position === "static"; )
-    n = bt(n, i);
-  return n && (P(n) === "html" || P(n) === "body" && O(n).position === "static" && !gt(n)) ? t : n || function(s) {
-    let l = K(s);
-    for (; U(l) && !Et(l); ) {
-      if (gt(l))
-        return l;
-      l = K(l);
+  let n = Nt(e, i);
+  for (; n && ge(n) && N(n).position === "static"; )
+    n = Nt(n, i);
+  return n && (z(n) === "html" || z(n) === "body" && N(n).position === "static" && !At(n)) ? t : n || function(s) {
+    let r = ct(s);
+    for (; R(r) && !Dt(r); ) {
+      if (At(r))
+        return r;
+      r = ct(r);
     }
     return null;
   }(e) || t;
 }
-function Kt(e, i, t) {
-  const n = U(i), s = M(i), l = J(e, !0, t === "fixed", i);
-  let r = { scrollLeft: 0, scrollTop: 0 };
-  const o = { x: 0, y: 0 };
+function me(e, i, t) {
+  const n = R(i), s = Y(i), r = ot(e, !0, t === "fixed", i);
+  let l = { scrollLeft: 0, scrollTop: 0 };
+  const a = { x: 0, y: 0 };
   if (n || !n && t !== "fixed")
-    if ((P(i) !== "body" || ot(s)) && (r = at(i)), U(i)) {
-      const h = J(i, !0);
-      o.x = h.x + i.clientLeft, o.y = h.y + i.clientTop;
+    if ((z(i) !== "body" || yt(s)) && (l = Lt(i)), R(i)) {
+      const h = ot(i, !0);
+      a.x = h.x + i.clientLeft, a.y = h.y + i.clientTop;
     } else
-      s && (o.x = Ot(s));
-  return { x: l.left + r.scrollLeft - o.x, y: l.top + r.scrollTop - o.y, width: l.width, height: l.height };
+      s && (a.x = Xt(s));
+  return { x: r.left + l.scrollLeft - a.x, y: r.top + l.scrollTop - a.y, width: r.width, height: r.height };
 }
-const Qt = { getClippingRect: function(e) {
+const ue = { getClippingRect: function(e) {
   let { element: i, boundary: t, rootBoundary: n, strategy: s } = e;
-  const l = t === "clippingAncestors" ? function(c, f) {
-    const a = f.get(c);
-    if (a)
-      return a;
-    let g = Rt(c).filter((y) => I(y) && P(y) !== "body"), m = null;
-    const p = O(c).position === "fixed";
-    let u = p ? K(c) : c;
-    for (; I(u) && !Et(u); ) {
-      const y = O(u), w = gt(u);
-      y.position === "fixed" && (m = null), (p ? w || m : w || y.position !== "static" || !m || !["absolute", "fixed"].includes(m.position)) ? m = y : g = g.filter((v) => v !== u), u = K(u);
+  const r = t === "clippingAncestors" ? function(o, f) {
+    const c = f.get(o);
+    if (c)
+      return c;
+    let g = zt(o).filter((p) => X(p) && z(p) !== "body"), m = null;
+    const E = N(o).position === "fixed";
+    let u = E ? ct(o) : o;
+    for (; X(u) && !Dt(u); ) {
+      const p = N(u), L = At(u);
+      p.position === "fixed" && (m = null), (E ? L || m : L || p.position !== "static" || !m || !["absolute", "fixed"].includes(m.position)) ? m = p : g = g.filter((y) => y !== u), u = ct(u);
     }
-    return f.set(c, g), g;
-  }(i, this._c) : [].concat(t), r = [...l, n], o = r[0], h = r.reduce((c, f) => {
-    const a = Tt(i, f, s);
-    return c.top = G(a.top, c.top), c.right = vt(a.right, c.right), c.bottom = vt(a.bottom, c.bottom), c.left = G(a.left, c.left), c;
-  }, Tt(i, o, s));
+    return f.set(o, g), g;
+  }(i, this._c) : [].concat(t), l = [...r, n], a = l[0], h = l.reduce((o, f) => {
+    const c = Vt(i, f, s);
+    return o.top = at(c.top, o.top), o.right = Rt(c.right, o.right), o.bottom = Rt(c.bottom, o.bottom), o.left = at(c.left, o.left), o;
+  }, Vt(i, a, s));
   return { width: h.right - h.left, height: h.bottom - h.top, x: h.left, y: h.top };
 }, convertOffsetParentRelativeRectToViewportRelativeRect: function(e) {
   let { rect: i, offsetParent: t, strategy: n } = e;
-  const s = U(t), l = M(t);
-  if (t === l)
+  const s = R(t), r = Y(t);
+  if (t === r)
     return i;
-  let r = { scrollLeft: 0, scrollTop: 0 }, o = { x: 1, y: 1 };
+  let l = { scrollLeft: 0, scrollTop: 0 }, a = { x: 1, y: 1 };
   const h = { x: 0, y: 0 };
-  if ((s || !s && n !== "fixed") && ((P(t) !== "body" || ot(l)) && (r = at(t)), U(t))) {
-    const c = J(t);
-    o = Y(t), h.x = c.x + t.clientLeft, h.y = c.y + t.clientTop;
+  if ((s || !s && n !== "fixed") && ((z(t) !== "body" || yt(r)) && (l = Lt(t)), R(t))) {
+    const o = ot(t);
+    a = nt(t), h.x = o.x + t.clientLeft, h.y = o.y + t.clientTop;
   }
-  return { width: i.width * o.x, height: i.height * o.y, x: i.x * o.x - r.scrollLeft * o.x + h.x, y: i.y * o.y - r.scrollTop * o.y + h.y };
-}, isElement: I, getDimensions: function(e) {
-  return Ft(e);
-}, getOffsetParent: xt, getDocumentElement: M, getScale: Y, async getElementRects(e) {
+  return { width: i.width * a.x, height: i.height * a.y, x: i.x * a.x - l.scrollLeft * a.x + h.x, y: i.y * a.y - l.scrollTop * a.y + h.y };
+}, isElement: X, getDimensions: function(e) {
+  return Mt(e);
+}, getOffsetParent: $t, getDocumentElement: Y, getScale: nt, async getElementRects(e) {
   let { reference: i, floating: t, strategy: n } = e;
-  const s = this.getOffsetParent || xt, l = this.getDimensions;
-  return { reference: Kt(i, await s(t), n), floating: { x: 0, y: 0, ...await l(t) } };
-}, getClientRects: (e) => Array.from(e.getClientRects()), isRTL: (e) => O(e).direction === "rtl" }, Vt = (e, i, t) => {
-  const n = /* @__PURE__ */ new Map(), s = { platform: Qt, ...t }, l = { ...s.platform, _c: n };
-  return It(e, i, { ...s, platform: l });
-}, A = class extends $ {
+  const s = this.getOffsetParent || $t, r = this.getDimensions;
+  return { reference: me(i, await s(t), n), floating: { x: 0, y: 0, ...await r(t) } };
+}, getClientRects: (e) => Array.from(e.getClientRects()), isRTL: (e) => N(e).direction === "rtl" }, Gt = (e, i, t) => {
+  const n = /* @__PURE__ */ new Map(), s = { platform: ue, ...t }, r = { ...s.platform, _c: n };
+  return ie(e, i, { ...s, platform: r });
+}, b = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_targetElement", null);
     d(this, "clicked", !1);
+    d(this, "_targetOffset", 8);
     d(this, "keyListener", (t) => {
       t.key == "Escape" && this.hide();
     });
@@ -571,17 +638,32 @@ const Qt = { getClippingRect: function(e) {
   }
   get isShown() {
     var t;
-    return ((t = this._targetElement) == null ? void 0 : t.classList.contains(A.DEFAULT.class.hidden)) === !1;
+    return ((t = this._targetElement) == null ? void 0 : t.classList.contains(b.DEFAULT.class.hidden)) === !1;
   }
   get isHover() {
     return this.config.trigger === "hover";
+  }
+  show() {
+    this.dispatchEvent(b.EVENTS.show), this.addComputePositionInTargetElement(), this._targetElement != null && this._element != null && (this._targetElement.classList.remove(b.DEFAULT.class.hidden), setTimeout(() => {
+      this._element.classList.add(b.DEFAULT.class.open), this._targetElement.classList.add(b.DEFAULT.class.open);
+    }, 1)), window.addEventListener("keydown", this.keyListener), this.dispatchEvent(b.EVENTS.shown);
+  }
+  hide() {
+    var t;
+    this.dispatchEvent(b.EVENTS.hide), this.clicked = !1, this._targetElement != null && ((t = this._element) == null || t.classList.remove(b.DEFAULT.class.open), this._targetElement.classList.remove(b.DEFAULT.class.open), this._targetElement.classList.add(b.DEFAULT.class.hidden)), window.removeEventListener("keydown", this.keyListener), this.dispatchEvent(b.EVENTS.hidden);
+  }
+  toggle() {
+    this.isShown ? this.hide() : this.show();
   }
   init() {
     this._element != null && (this._targetElement = this.getTargetElement(), this.initOptions(), this.initListener());
   }
   initOptions() {
-    var t, n, s, l, r, o;
-    (t = this._targetElement) == null || t.classList.add(A.DEFAULT.class.base), (s = this.config).placement ?? (s.placement = ((n = this._element) == null ? void 0 : n.getAttribute(A.DEFAULT.attr.placement)) ?? "bottom-start"), (r = this.config).trigger ?? (r.trigger = ((l = this._element) == null ? void 0 : l.getAttribute(A.DEFAULT.attr.trigger)) == "hover" ? "hover" : "click"), ((o = this._targetElement) == null ? void 0 : o.classList.contains(A.DEFAULT.class.hidden)) === !1 && this.show();
+    var t, n, s, r, l, a, h, o;
+    if ((t = this._element) == null || t.classList.add(b.DEFAULT.class.base), (n = this._targetElement) == null || n.classList.add(b.DEFAULT.class.base), (r = this.config).placement ?? (r.placement = ((s = this._element) == null ? void 0 : s.getAttribute(b.DEFAULT.attr.placement)) ?? "bottom-start"), (a = this.config).trigger ?? (a.trigger = ((l = this._element) == null ? void 0 : l.getAttribute(b.DEFAULT.attr.trigger)) == "hover" ? "hover" : "click"), ((h = this._targetElement) == null ? void 0 : h.classList.contains(b.DEFAULT.class.hidden)) === !1 && this.show(), (o = this._element) != null && o.hasAttribute(b.DEFAULT.attr.offset)) {
+      const f = this._element.getAttribute(b.DEFAULT.attr.offset);
+      isNaN(parseInt(f)) || (this._targetOffset = parseInt(f));
+    }
   }
   initListener() {
     var t, n;
@@ -590,47 +672,38 @@ const Qt = { getClippingRect: function(e) {
     }), this.isHover && ((n = this._element) == null || n.addEventListener("mouseover", () => {
       this.show();
     }), window.addEventListener("mousemove", (s) => {
-      this._destroyed || this._targetElement != null && this._element != null && s.target instanceof HTMLElement && !this.clicked && !E.isElementSameOrContains(this._targetElement, s.target) && !E.isElementSameOrContains(this._element, s.target) && this.hide();
+      this._destroyed || this._targetElement != null && this._element != null && s.target instanceof HTMLElement && !this.clicked && !v.isElementSameOrContains(this._targetElement, s.target) && !v.isElementSameOrContains(this._element, s.target) && this.hide();
     })), window.addEventListener("click", (s) => {
-      this._destroyed || this._targetElement != null && this._element != null && s.target instanceof HTMLElement && !E.isElementSameOrContains(this._targetElement, s.target) && !E.isElementSameOrContains(this._element, s.target) && this.hide();
+      this._destroyed || this._targetElement != null && this._element != null && s.target instanceof HTMLElement && !v.isElementSameOrContains(this._targetElement, s.target) && !v.isElementSameOrContains(this._element, s.target) && this.hide();
     });
   }
-  show() {
-    this.dispatchEvent(A.EVENTS.show), this.addComputePositionInTargetElement(), this._targetElement != null && this._element != null && (this._targetElement.classList.remove(A.DEFAULT.class.hidden), setTimeout(() => {
-      this._element.classList.add(A.DEFAULT.class.open), this._targetElement.classList.add(A.DEFAULT.class.open);
-    }, 1)), window.addEventListener("keydown", this.keyListener), this.dispatchEvent(A.EVENTS.shown);
-  }
-  hide() {
-    var t;
-    this.dispatchEvent(A.EVENTS.hide), this.clicked = !1, this._targetElement != null && ((t = this._element) == null || t.classList.remove(A.DEFAULT.class.open), this._targetElement.classList.remove(A.DEFAULT.class.open), this._targetElement.classList.add(A.DEFAULT.class.hidden)), window.removeEventListener("keydown", this.keyListener), this.dispatchEvent(A.EVENTS.hidden);
-  }
-  toggle() {
-    this.isShown ? this.hide() : this.show();
-  }
   addComputePositionInTargetElement() {
-    this._element != null && this._targetElement != null && (this._targetElement.classList.add("absolute"), Vt(this._element, this._targetElement, {
-      placement: this.config.placement
-    }).then(({ x: t, y: n }) => {
+    console.info(this._targetOffset);
+    const t = [Pt(this._targetOffset)];
+    this._element != null && this._targetElement != null && (this._targetElement.classList.add("absolute"), Gt(this._element, this._targetElement, {
+      placement: this.config.placement,
+      middleware: t
+    }).then(({ x: n, y: s }) => {
       this._targetElement != null && Object.assign(this._targetElement.style, {
-        left: `${t}px`,
-        top: `${n}px`
+        left: `${n}px`,
+        top: `${s}px`
       });
     }));
   }
   getTargetElement() {
     if (this._element == null)
       return null;
-    const t = this._element.getAttribute(A.DEFAULT.attr.target), n = this.config.target ?? t;
-    return typeof n == "string" ? E.findOrById(n) : n instanceof HTMLElement ? n : E.nextElementSibling(this._element);
+    const t = this._element.getAttribute(b.DEFAULT.attr.target), n = this.config.target ?? t;
+    return typeof n == "string" ? v.findOrById(n) : n instanceof HTMLElement ? n : v.nextElementSibling(this._element);
   }
 };
-let C = A;
-d(C, "type", "dropdown"), d(C, "SELECTOR", '[data-fc-type="dropdown"]'), d(C, "EVENTS", {
+let W = b;
+d(W, "type", "dropdown"), d(W, "SELECTOR", '[data-fc-type="dropdown"]'), d(W, "EVENTS", {
   show: "fc.dropdown.show",
   shown: "fc.dropdown.shown",
   hide: "fc.dropdown.hide",
   hidden: "fc.dropdown.hidden"
-}), d(C, "DEFAULT", {
+}), d(W, "DEFAULT", {
   class: {
     base: "fc-dropdown",
     hidden: "hidden",
@@ -639,10 +712,11 @@ d(C, "type", "dropdown"), d(C, "SELECTOR", '[data-fc-type="dropdown"]'), d(C, "E
   attr: {
     target: "data-fc-target",
     placement: "data-fc-placement",
-    trigger: "data-fc-trigger"
+    trigger: "data-fc-trigger",
+    offset: "data-fc-offset"
   }
 });
-const pt = class extends $ {
+const Ft = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_elements", /* @__PURE__ */ new Map());
@@ -652,10 +726,10 @@ const pt = class extends $ {
     if (this._element != null) {
       const t = /* @__PURE__ */ new Map(), n = this._element.querySelectorAll("[data-fc-target]");
       for (const s of n) {
-        const l = s.getAttribute(pt.DEFAULT.attr.target);
-        if (l != null) {
-          const r = E.findOrById(l);
-          r != null && t.set(s, r);
+        const r = s.getAttribute(Ft.DEFAULT.attr.target);
+        if (r != null) {
+          const l = v.findOrById(r);
+          l != null && t.set(s, l);
         }
       }
       this._elements = t, this.initListener();
@@ -668,17 +742,17 @@ const pt = class extends $ {
       });
   }
   showTab(t) {
-    const n = this._elements.get(t), l = Array.from(this._elements.keys()).filter((r) => r != t).map((r) => this._elements.get(r));
-    n == null || n.classList.remove("hidden"), l.forEach((r) => r.classList.add("hidden"));
+    const n = this._elements.get(t), s = Array.from(this._elements.keys()).filter((l) => l != t), r = s.map((l) => this._elements.get(l));
+    n == null || n.classList.remove("hidden"), r.forEach((l) => l.classList.add("hidden")), n == null || n.classList.add("active"), t.classList.add("active"), r.forEach((l) => l.classList.remove("active")), s.forEach((l) => l.classList.remove("active"));
   }
 };
-let W = pt;
-d(W, "type", "tab"), d(W, "SELECTOR", '[data-fc-type="tab"]'), d(W, "DEFAULT", {
+let Z = Ft;
+d(Z, "type", "tab"), d(Z, "SELECTOR", '[data-fc-type="tab"]'), d(Z, "DEFAULT", {
   attr: {
     target: "data-fc-target"
   }
 });
-const T = class extends $ {
+const x = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_targetElement", null);
@@ -687,52 +761,52 @@ const T = class extends $ {
       t.key == "Escape" && !this.isStatic && this.hide();
     });
     d(this, "onWindowClicked", (t) => {
-      !this.isStatic && t.target instanceof HTMLElement && this._targetElement && this.isShown && (E.isElementContains(this._targetElement, t.target) || this.hide());
+      !this.isStatic && t.target instanceof HTMLElement && this._targetElement && this.isShown && (v.isElementContains(this._targetElement, t.target) || this.hide());
     });
     this.init();
   }
   get isShown() {
     var t;
-    return !((t = this._targetElement) != null && t.classList.contains(T.DEFAULT.class.hidden));
+    return !((t = this._targetElement) != null && t.classList.contains(x.DEFAULT.class.hidden));
   }
   get isStatic() {
     return this.config.behavior === "static";
   }
   init() {
     var t;
-    this._element != null && (this._targetElement = this.getTargetElement(), (t = this._targetElement) == null || t.classList.add(T.DEFAULT.class.base), this.initOptions(), this.initListener());
+    this._element != null && (this._targetElement = this.getTargetElement(), (t = this._targetElement) == null || t.classList.add(x.DEFAULT.class.base), this.initOptions(), this.initListener());
   }
   initOptions() {
     var n;
-    let t = (n = this._element) == null ? void 0 : n.getAttribute(T.DEFAULT.attr.behavior);
+    let t = (n = this._element) == null ? void 0 : n.getAttribute(x.DEFAULT.attr.behavior);
     t ? this.config.behavior = t == "static" ? "static" : "default" : this.config.behavior == null && (this.config.behavior = "default");
   }
   initListener() {
     var t;
     this._element != null && (this._element.addEventListener("click", () => {
       this.toggle();
-    }), (t = this._targetElement) == null || t.querySelectorAll(`[${T.DEFAULT.attr.dismiss}]`).forEach((n) => {
+    }), (t = this._targetElement) == null || t.querySelectorAll(`[${x.DEFAULT.attr.dismiss}]`).forEach((n) => {
       n.addEventListener("click", () => {
         this.hide();
       });
     }));
   }
   show() {
-    if (this.dispatchEvent(T.EVENTS.show), this._targetElement != null && this._element != null) {
+    if (this.dispatchEvent(x.EVENTS.show), this._targetElement != null && this._element != null) {
       const t = document.documentElement.clientWidth;
-      document.body.style.paddingRight = Math.abs(window.innerWidth - t) + "px", document.body.classList.add(T.DEFAULT.class.overflowHidden), this._element.classList.add(T.DEFAULT.class.open), this._targetElement.classList.remove(T.DEFAULT.class.hidden), setTimeout(() => {
-        this._targetElement.classList.add(T.DEFAULT.class.open), E.showOverlay(), this._windowClickListen || (window.addEventListener("click", this.onWindowClicked), this._windowClickListen = !0);
+      document.body.style.paddingRight = Math.abs(window.innerWidth - t) + "px", document.body.classList.add(x.DEFAULT.class.overflowHidden), this._element.classList.add(x.DEFAULT.class.open), this._targetElement.classList.remove(x.DEFAULT.class.hidden), setTimeout(() => {
+        this._targetElement.classList.add(x.DEFAULT.class.open), v.showOverlay(), this._windowClickListen || (window.addEventListener("click", this.onWindowClicked), this._windowClickListen = !0);
       }, 1);
     }
-    window.addEventListener("keydown", this.keyListener), this.dispatchEvent(T.EVENTS.shown);
+    window.addEventListener("keydown", this.keyListener), this.dispatchEvent(x.EVENTS.shown);
   }
   hide() {
     var t;
-    this.dispatchEvent(T.EVENTS.hide), this._targetElement != null && this.isShown && (document.body.classList.remove(T.DEFAULT.class.overflowHidden), (t = this._element) == null || t.classList.remove(T.DEFAULT.class.open), this._targetElement.classList.remove(T.DEFAULT.class.open), Object.assign(document.body.style, {
+    this.dispatchEvent(x.EVENTS.hide), this._targetElement != null && this.isShown && (document.body.classList.remove(x.DEFAULT.class.overflowHidden), (t = this._element) == null || t.classList.remove(x.DEFAULT.class.open), this._targetElement.classList.remove(x.DEFAULT.class.open), Object.assign(document.body.style, {
       paddingRight: null
     }), setTimeout(() => {
-      window.removeEventListener("click", this.onWindowClicked), this._windowClickListen = !1, E.hideOverlay(), this._targetElement.classList.add(T.DEFAULT.class.hidden);
-    }, 1)), window.removeEventListener("keydown", this.keyListener), this.dispatchEvent(T.EVENTS.hidden);
+      window.removeEventListener("click", this.onWindowClicked), this._windowClickListen = !1, v.hideOverlay(), this._targetElement.classList.add(x.DEFAULT.class.hidden);
+    }, 1)), window.removeEventListener("keydown", this.keyListener), this.dispatchEvent(x.EVENTS.hidden);
   }
   toggle() {
     this.isShown ? this.hide() : this.show();
@@ -740,17 +814,17 @@ const T = class extends $ {
   getTargetElement() {
     if (this._element == null)
       return null;
-    const t = this.config.target ?? this._element.getAttribute(T.DEFAULT.attr.target);
-    return typeof t == "string" ? E.findOrById(t) : t instanceof HTMLElement ? t : E.nextElementSibling(this._element);
+    const t = this.config.target ?? this._element.getAttribute(x.DEFAULT.attr.target);
+    return typeof t == "string" ? v.findOrById(t) : t instanceof HTMLElement ? t : v.nextElementSibling(this._element);
   }
 };
-let R = T;
-d(R, "type", "modal"), d(R, "SELECTOR", '[data-fc-type="modal"]'), d(R, "EVENTS", {
+let B = x;
+d(B, "type", "modal"), d(B, "SELECTOR", '[data-fc-type="modal"]'), d(B, "EVENTS", {
   show: "fc.modal.show",
   shown: "fc.modal.shown",
   hide: "fc.modal.hide",
   hidden: "fc.modal.hidden"
-}), d(R, "DEFAULT", {
+}), d(B, "DEFAULT", {
   class: {
     base: "fc-modal",
     hidden: "hidden",
@@ -763,7 +837,7 @@ d(R, "type", "modal"), d(R, "SELECTOR", '[data-fc-type="modal"]'), d(R, "EVENTS"
     behavior: "data-fc-behavior"
   }
 });
-const L = class extends $ {
+const w = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_targetElement", null);
@@ -771,15 +845,34 @@ const L = class extends $ {
     d(this, "_targetOffset", 8);
     this.init();
   }
+  get isShown() {
+    var t;
+    return !((t = this._targetElement) != null && t.classList.contains(w.DEFAULT.class.hidden));
+  }
+  get isClickTrigger() {
+    return this.config.trigger === "click";
+  }
+  show() {
+    this.computeTooltipPosition(), this.dispatchEvent(w.EVENTS.show), this._targetElement != null && this._element != null && (this._targetElement.classList.remove(w.DEFAULT.class.hidden), this._targetElement.classList.remove(w.DEFAULT.class.opacity0), setTimeout(() => {
+      this._element.classList.add(w.DEFAULT.class.open), this._targetElement.classList.add(w.DEFAULT.class.open), this._targetElement.classList.add(w.DEFAULT.class.opacity100);
+    }, 1)), this.dispatchEvent(w.EVENTS.shown);
+  }
+  hide() {
+    var t;
+    this.dispatchEvent(w.EVENTS.hide), this._targetElement != null && ((t = this._element) == null || t.classList.remove(w.DEFAULT.class.open), this._targetElement.classList.add(w.DEFAULT.class.opacity0), this._targetElement.classList.remove(w.DEFAULT.class.opacity100), this._targetElement.classList.add(w.DEFAULT.class.hidden)), this.dispatchEvent(w.EVENTS.hidden);
+  }
+  toggle() {
+    this.isShown ? this.hide() : this.show();
+  }
   init() {
-    const t = this._element.getAttribute(L.DEFAULT.attr.target);
-    t ? this._targetElement = E.findOrById(t) : this._targetElement = E.nextElementSibling(this._element), this._targetElement && (this._arrowElement = this._targetElement.querySelector(`[${L.DEFAULT.attr.arrow}]`)), this.initOptions(), this.initListener();
+    const t = this._element.getAttribute(w.DEFAULT.attr.target);
+    t ? this._targetElement = v.findOrById(t) : this._targetElement = v.nextElementSibling(this._element), this._targetElement && (this._arrowElement = this._targetElement.querySelector(`[${w.DEFAULT.attr.arrow}]`)), this.initOptions(), this.initListener();
   }
   initOptions() {
-    var t, n, s, l, r;
-    if ((t = this._element) != null && t.hasAttribute(L.DEFAULT.attr.placement) && (this.config.placement = (n = this._element) == null ? void 0 : n.getAttribute(L.DEFAULT.attr.placement)), (s = this._element) != null && s.hasAttribute(L.DEFAULT.attr.trigger) && (this.config.trigger = ((l = this._element) == null ? void 0 : l.getAttribute(L.DEFAULT.attr.trigger)) === "click" ? "click" : "hover"), (r = this._element) != null && r.hasAttribute(L.DEFAULT.attr.offset)) {
-      const o = this._element.getAttribute(L.DEFAULT.attr.offset);
-      isNaN(parseInt(o)) || (this._targetOffset = parseInt(o));
+    var t, n, s, r, l;
+    if ((t = this._element) != null && t.hasAttribute(w.DEFAULT.attr.placement) && (this.config.placement = (n = this._element) == null ? void 0 : n.getAttribute(w.DEFAULT.attr.placement)), (s = this._element) != null && s.hasAttribute(w.DEFAULT.attr.trigger) && (this.config.trigger = ((r = this._element) == null ? void 0 : r.getAttribute(w.DEFAULT.attr.trigger)) === "click" ? "click" : "hover"), (l = this._element) != null && l.hasAttribute(w.DEFAULT.attr.offset)) {
+      const a = this._element.getAttribute(w.DEFAULT.attr.offset);
+      isNaN(parseInt(a)) || (this._targetOffset = parseInt(a));
     }
   }
   initListener() {
@@ -791,54 +884,35 @@ const L = class extends $ {
       this.hide();
     })));
   }
-  get isShown() {
-    var t;
-    return !((t = this._targetElement) != null && t.classList.contains(L.DEFAULT.class.hidden));
-  }
-  get isClickTrigger() {
-    return this.config.trigger === "click";
-  }
-  show() {
-    this.computeTooltipPosition(), this.dispatchEvent(L.EVENTS.show), this._targetElement != null && this._element != null && (this._targetElement.classList.remove(L.DEFAULT.class.hidden), this._targetElement.classList.remove(L.DEFAULT.class.opacity0), setTimeout(() => {
-      this._element.classList.add(L.DEFAULT.class.open), this._targetElement.classList.add(L.DEFAULT.class.open), this._targetElement.classList.add(L.DEFAULT.class.opacity100);
-    }, 1)), this.dispatchEvent(L.EVENTS.shown);
-  }
-  hide() {
-    var t;
-    this.dispatchEvent(L.EVENTS.hide), this._targetElement != null && ((t = this._element) == null || t.classList.remove(L.DEFAULT.class.open), this._targetElement.classList.add(L.DEFAULT.class.opacity0), this._targetElement.classList.remove(L.DEFAULT.class.opacity100), this._targetElement.classList.add(L.DEFAULT.class.hidden)), this.dispatchEvent(L.EVENTS.hidden);
-  }
-  toggle() {
-    this.isShown ? this.hide() : this.show();
-  }
   computeTooltipPosition() {
-    const t = [Yt(this._targetOffset), Gt({ padding: 2 })];
-    this._arrowElement && t.push(qt({ element: this._arrowElement })), this._element != null && this._targetElement != null && (this._targetElement.classList.add(L.DEFAULT.class.absolute), this._arrowElement && this._arrowElement.classList.add(L.DEFAULT.class.absolute), Vt(this._element, this._targetElement, {
+    const t = [Pt(this._targetOffset), fe({ padding: 2 }), he({ fallbackStrategy: "bestFit" })];
+    this._arrowElement && t.push(le({ element: this._arrowElement })), this._element != null && this._targetElement != null && (this._targetElement.classList.add(w.DEFAULT.class.absolute), this._arrowElement && this._arrowElement.classList.add(w.DEFAULT.class.absolute), Gt(this._element, this._targetElement, {
       placement: this.config.placement,
       middleware: t
-    }).then(({ x: n, y: s, middlewareData: l }) => {
-      var r, o, h, c;
+    }).then(({ x: n, y: s, middlewareData: r }) => {
+      var l, a, h, o;
       if (Object.assign(this._targetElement.style, {
         left: `${n}px`,
         top: `${s}px`
-      }), l.arrow && this._arrowElement) {
-        const { x: f, y: a } = l.arrow, g = f != null ? `${f}px` : `${-this._arrowElement.offsetWidth / 2}px`, m = a != null ? `${a}px` : `${-this._arrowElement.offsetHeight / 2}px`, p = {
-          left: (r = this.config.placement) != null && r.includes("left") ? null : g,
-          top: (o = this.config.placement) != null && o.includes("top") ? null : m,
+      }), r.arrow && this._arrowElement) {
+        const { x: f, y: c } = r.arrow, g = f != null ? `${f}px` : `${-this._arrowElement.offsetWidth / 2}px`, m = c != null ? `${c}px` : `${-this._arrowElement.offsetHeight / 2}px`, E = {
+          left: (l = this.config.placement) != null && l.includes("left") ? null : g,
+          top: (a = this.config.placement) != null && a.includes("top") ? null : m,
           right: (h = this.config.placement) != null && h.includes("left") ? g : null,
-          bottom: (c = this.config.placement) != null && c.includes("top") ? m : null
+          bottom: (o = this.config.placement) != null && o.includes("top") ? m : null
         };
-        Object.assign(this._arrowElement.style, p);
+        Object.assign(this._arrowElement.style, E);
       }
     }));
   }
 };
-let V = L;
-d(V, "type", "tooltip"), d(V, "SELECTOR", '[data-fc-type="tooltip"]'), d(V, "EVENTS", {
+let M = w;
+d(M, "type", "tooltip"), d(M, "SELECTOR", '[data-fc-type="tooltip"]'), d(M, "EVENTS", {
   show: "fc.tooltip.show",
   shown: "fc.tooltip.shown",
   hide: "fc.tooltip.hide",
   hidden: "fc.tooltip.hidden"
-}), d(V, "DEFAULT", {
+}), d(M, "DEFAULT", {
   class: {
     base: "fc-collapse",
     hidden: "hidden",
@@ -855,7 +929,7 @@ d(V, "type", "tooltip"), d(V, "SELECTOR", '[data-fc-type="tooltip"]'), d(V, "EVE
     offset: "data-fc-offset"
   }
 });
-const b = class extends $ {
+const A = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_targetElement", null);
@@ -866,52 +940,52 @@ const b = class extends $ {
   }
   init() {
     var t;
-    this._element != null && (this._targetElement = this.getTargetElement(), (t = this._targetElement) == null || t.classList.add(b.DEFAULT.class.base), this.initOptions(), this.initListener());
+    this._element != null && (this._targetElement = this.getTargetElement(), (t = this._targetElement) == null || t.classList.add(A.DEFAULT.class.base), this.initOptions(), this.initListener());
   }
   initOptions() {
-    var l, r, o;
-    let t = (l = this._element) == null ? void 0 : l.getAttribute(b.DEFAULT.attr.scroll);
+    var r, l, a;
+    let t = (r = this._element) == null ? void 0 : r.getAttribute(A.DEFAULT.attr.scroll);
     t ? this.config.scroll = t !== "false" : this.config.scroll == null && (this.config.scroll = !1);
-    let n = (r = this._element) == null ? void 0 : r.getAttribute(b.DEFAULT.attr.backdrop);
+    let n = (l = this._element) == null ? void 0 : l.getAttribute(A.DEFAULT.attr.backdrop);
     n ? this.config.backdrop = n !== "false" : this.config.backdrop == null && (this.config.backdrop = !0);
-    let s = (o = this._element) == null ? void 0 : o.getAttribute(b.DEFAULT.attr.behavior);
+    let s = (a = this._element) == null ? void 0 : a.getAttribute(A.DEFAULT.attr.behavior);
     s ? this.config.behavior = s == "static" ? "static" : "default" : this.config.behavior == null && (this.config.behavior = "default");
   }
   initListener() {
     var t;
     this._element != null && (this._element.addEventListener("click", () => {
       this.toggle();
-    }), (t = this._targetElement) == null || t.querySelectorAll(`[${b.DEFAULT.attr.dismiss}]`).forEach((n) => {
+    }), (t = this._targetElement) == null || t.querySelectorAll(`[${A.DEFAULT.attr.dismiss}]`).forEach((n) => {
       n.addEventListener("click", () => {
         this.hide();
       });
-    }), et.listenOverlayClick(() => {
+    }), gt.listenOverlayClick(() => {
       this.isStatic || this.hide();
     }));
   }
   get isShown() {
     var t;
-    return !((t = this._targetElement) != null && t.classList.contains(b.DEFAULT.class.hidden));
+    return !((t = this._targetElement) != null && t.classList.contains(A.DEFAULT.class.hidden));
   }
   get isStatic() {
     return this.config.behavior === "static";
   }
   show() {
-    if (this.dispatchEvent(b.EVENTS.show), this._targetElement != null && this._element != null && (this._targetElement.classList.remove(b.DEFAULT.class.hidden), this._element.classList.add(b.DEFAULT.class.open), this.config.backdrop && E.showOverlay(), setTimeout(() => {
-      this._targetElement.classList.add(b.DEFAULT.class.open);
+    if (this.dispatchEvent(A.EVENTS.show), this._targetElement != null && this._element != null && (this._targetElement.classList.remove(A.DEFAULT.class.hidden), this._element.classList.add(A.DEFAULT.class.open), this.config.backdrop && v.showOverlay(), setTimeout(() => {
+      this._targetElement.classList.add(A.DEFAULT.class.open);
     }, 1), !this.config.scroll)) {
       const t = document.documentElement.clientWidth;
       document.body.style.paddingRight = Math.abs(window.innerWidth - t) + "px", document.body.classList.add("overflow-hidden");
     }
-    window.addEventListener("keydown", this.keyListener), this.dispatchEvent(b.EVENTS.shown);
+    window.addEventListener("keydown", this.keyListener), this.dispatchEvent(A.EVENTS.shown);
   }
   hide() {
     var t;
-    this.isShown && (this.dispatchEvent(b.EVENTS.hide), this._targetElement != null && this.isShown && ((t = this._element) == null || t.classList.remove(b.DEFAULT.class.open), this._targetElement.classList.remove(b.DEFAULT.class.open), et.afterTransition(this._targetElement, () => {
-      this._targetElement.classList.add(b.DEFAULT.class.hidden), this.config.backdrop && E.hideOverlay();
+    this.isShown && (this.dispatchEvent(A.EVENTS.hide), this._targetElement != null && this.isShown && ((t = this._element) == null || t.classList.remove(A.DEFAULT.class.open), this._targetElement.classList.remove(A.DEFAULT.class.open), gt.afterTransition(this._targetElement, () => {
+      this._targetElement.classList.add(A.DEFAULT.class.hidden), this.config.backdrop && v.hideOverlay();
     }), this.config.scroll || (document.body.classList.remove("overflow-hidden"), Object.assign(document.body.style, {
       paddingRight: null
-    }))), window.removeEventListener("keydown", this.keyListener), this.dispatchEvent(b.EVENTS.hidden));
+    }))), window.removeEventListener("keydown", this.keyListener), this.dispatchEvent(A.EVENTS.hidden));
   }
   toggle() {
     this.isShown ? this.hide() : this.show();
@@ -919,17 +993,17 @@ const b = class extends $ {
   getTargetElement() {
     if (this._element == null)
       return null;
-    const t = this.config.target ?? this._element.getAttribute(b.DEFAULT.attr.target);
-    return typeof t == "string" ? E.findOrById(t) : t instanceof HTMLElement ? t : E.nextElementSibling(this._element);
+    const t = this.config.target ?? this._element.getAttribute(A.DEFAULT.attr.target);
+    return typeof t == "string" ? v.findOrById(t) : t instanceof HTMLElement ? t : v.nextElementSibling(this._element);
   }
 };
-let N = b;
-d(N, "type", "offcanvas"), d(N, "SELECTOR", '[data-fc-type="offcanvas"]'), d(N, "EVENTS", {
+let j = A;
+d(j, "type", "offcanvas"), d(j, "SELECTOR", '[data-fc-type="offcanvas"]'), d(j, "EVENTS", {
   show: "fc.offcanvas.show",
   shown: "fc.offcanvas.shown",
   hide: "fc.offcanvas.hide",
   hidden: "fc.offcanvas.hidden"
-}), d(N, "DEFAULT", {
+}), d(j, "DEFAULT", {
   class: {
     base: "fc-offcanvas",
     hidden: "hidden",
@@ -943,7 +1017,7 @@ d(N, "type", "offcanvas"), d(N, "SELECTOR", '[data-fc-type="offcanvas"]'), d(N, 
     backdrop: "data-fc-backdrop"
   }
 });
-const X = class extends $ {
+const it = class extends I {
   constructor(t, n) {
     super(t, n);
     d(this, "_targetElement", null);
@@ -958,20 +1032,20 @@ const X = class extends $ {
     });
   }
   hide() {
-    this.dispatchEvent(X.EVENTS.hide), this._targetElement != null && this._targetElement.classList.add(X.DEFAULT.class.hidden), this.dispatchEvent(X.EVENTS.hidden);
+    this.dispatchEvent(it.EVENTS.hide), this._targetElement != null && this._targetElement.classList.add(it.DEFAULT.class.hidden), this.dispatchEvent(it.EVENTS.hidden);
   }
   _getTargetElement() {
     if (this._element == null)
       return null;
-    const t = this.config.target ?? this._element.getAttribute(X.DEFAULT.attr.target);
-    return typeof t == "string" ? E.findOrById(t) : t instanceof HTMLElement ? t : this._element.parentElement;
+    const t = this.config.target ?? this._element.getAttribute(it.DEFAULT.attr.target);
+    return typeof t == "string" ? v.findOrById(t) : t instanceof HTMLElement ? t : this._element.parentElement;
   }
 };
-let H = X;
-d(H, "type", "dismissable"), d(H, "SELECTOR", "[data-fc-dismiss]"), d(H, "EVENTS", {
+let q = it;
+d(q, "type", "dismissable"), d(q, "SELECTOR", "[data-fc-dismiss]"), d(q, "EVENTS", {
   hide: "fc.dismissable.hide",
   hidden: "fc.dismissable.hidden"
-}), d(H, "DEFAULT", {
+}), d(q, "DEFAULT", {
   class: {
     hidden: "hidden"
   },
@@ -979,31 +1053,29 @@ d(H, "type", "dismissable"), d(H, "SELECTOR", "[data-fc-dismiss]"), d(H, "EVENTS
     target: "data-fc-dismiss"
   }
 });
-function Nt() {
-  E.findAll(S.SELECTOR).forEach((e) => new S(e)), E.findAll(B.SELECTOR).forEach((e) => new B(e)), E.findAll(C.SELECTOR).forEach((e) => new C(e)), E.findAll(W.SELECTOR).forEach((e) => new W(e)), E.findAll(R.SELECTOR).forEach((e) => new R(e)), E.findAll(N.SELECTOR).forEach((e) => new N(e)), E.findAll(V.SELECTOR).forEach((e) => new V(e)), E.findAll(H.SELECTOR).forEach((e) => new H(e));
+function Jt() {
+  [O, Q, W, Z, B, j, M, q].map((e) => v.findAll(e.SELECTOR).forEach((i) => e.getInstanceOrCreate(i)));
 }
-const Zt = {
-  autoAwake: Nt,
-  Collapse: S,
-  Accordion: B,
-  Dropdown: C,
-  Tooltip: V,
-  Modal: R,
-  Offcanvas: N,
-  Dismissable: H,
-  Tab: W
+const Ee = {
+  autoAwake: Jt,
+  Collapse: O,
+  Accordion: Q,
+  Dropdown: W,
+  Tooltip: M,
+  Modal: B,
+  Offcanvas: j,
+  Dismissable: q,
+  Tab: Z
 };
-window.frost = Zt;
-E.addOverlay(["transition-all", "fixed", "inset-0", "z-40", "bg-gray-900", "bg-opacity-50", "dark:bg-opacity-80"]);
-Nt();
+typeof window < "u" && (window.frost = Ee, v.addOverlay(["transition-all", "fixed", "inset-0", "z-40", "bg-gray-900", "bg-opacity-50", "dark:bg-opacity-80"]), Jt());
 export {
-  B as Accordion,
-  S as Collapse,
-  H as Dismissable,
-  C as Dropdown,
-  R as Modal,
-  N as Offcanvas,
-  W as Tab,
-  V as Tooltip,
-  Nt as autoAwake
+  Q as Accordion,
+  O as Collapse,
+  q as Dismissable,
+  W as Dropdown,
+  B as Modal,
+  j as Offcanvas,
+  Z as Tab,
+  M as Tooltip,
+  Jt as autoAwake
 };
