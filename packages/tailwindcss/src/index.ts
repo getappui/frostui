@@ -1,21 +1,18 @@
+import { FrostApp } from '~/frost'
 import Collapse from '~/components/collapse'
-import { DomEngine } from '~/dom/engine'
 import Accordion from '~/components/accordion'
 import Dropdown from '~/components/dropdown'
-import Tab from '~/components/tab'
-import Modal from '~/components/modal'
 import Tooltip from '~/components/tooltip'
+import Modal from '~/components/modal'
 import Offcanvas from '~/components/offcanvas'
 import Dismissable from '~/components/dismissable'
+import ThemeSwitcher from '~/components/theme_switcher'
+import Tab from '~/components/tab'
 
-function autoAwake () {
-    [Collapse, Accordion, Dropdown, Tab, Modal, Offcanvas, Tooltip, Dismissable]
-        .map((c) => DomEngine.findAll(c.SELECTOR).forEach((l) => c.getInstanceOrCreate(l)))
+const app = FrostApp.instance
 
-}
 
 const frost = {
-    autoAwake,
     Collapse,
     Accordion,
     Dropdown,
@@ -23,15 +20,17 @@ const frost = {
     Modal,
     Offcanvas,
     Dismissable,
-    Tab
+    Tab,
+    app
+}
+
+const initFrost = app.init
+
+if (typeof window != 'undefined') {
+    (window as any).frost = frost
+    initFrost()
 }
 
 export {
-    autoAwake, Collapse, Accordion, Dropdown, Tooltip, Modal, Offcanvas, Dismissable, Tab
-}
-
-if (typeof window !== 'undefined') {
-    (window as any).frost = frost
-    DomEngine.addOverlay(['transition-all', 'fixed', 'inset-0', 'z-40', 'bg-gray-900', 'bg-opacity-50', 'dark:bg-opacity-80'])
-    autoAwake()
+    initFrost, Collapse, Accordion, Dropdown, Tooltip, Modal, Offcanvas, Dismissable, Tab, ThemeSwitcher
 }

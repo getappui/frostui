@@ -60,6 +60,9 @@ export const DomEngine = {
     },
     isElementContains (parent: HTMLElement, child: HTMLElement) {
         return parent.contains(child) && parent != child
+    },
+    getAttribute<T>(element: HTMLElement, qualifiedName: string, defaultValue: T|null = null): T|null {
+        return element.hasAttribute(qualifiedName) ? element.getAttribute(qualifiedName) as T : defaultValue
     }
 
 }

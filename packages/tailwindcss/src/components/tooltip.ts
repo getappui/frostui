@@ -8,7 +8,7 @@
  */
 
 import BaseComponent from './base'
-import { Placement, type TooltipOption } from '~/types'
+import { IPlacement, type TooltipOption } from '~/types'
 import { DomEngine } from '~/dom/engine'
 import { arrow, computePosition, offset, shift, flip } from '@floating-ui/dom'
 
@@ -113,7 +113,7 @@ export default class Tooltip extends BaseComponent<TooltipOption> {
 
     private initOptions (): void {
         if (this._element?.hasAttribute(Tooltip.DEFAULT.attr.placement)) {
-            this.config.placement = this._element?.getAttribute(Tooltip.DEFAULT.attr.placement) as Placement
+            this.config.placement = this._element?.getAttribute(Tooltip.DEFAULT.attr.placement) as IPlacement
         }
         if (this._element?.hasAttribute(Tooltip.DEFAULT.attr.trigger)) {
             this.config.trigger = this._element?.getAttribute(Tooltip.DEFAULT.attr.trigger) === 'click' ? 'click' : 'hover'
