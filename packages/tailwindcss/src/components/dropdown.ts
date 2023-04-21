@@ -9,7 +9,7 @@
  */
 
 import BaseComponent from './base'
-import { type DropdownOption, type Placement } from '~/types'
+import { type DropdownOption, IDropdownAutoclose, IDropdownTrigger, type IPlacement } from '~/types'
 import { DomEngine } from '~/dom/engine'
 import { computePosition, offset } from '@floating-ui/dom'
 
@@ -38,6 +38,7 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
             placement: 'data-fc-placement',
             trigger: 'data-fc-trigger',
             offset: 'data-fc-offset',
+            autoclose: 'data-fc-autoclose'
         }
     }
 
@@ -47,6 +48,9 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
     // Open dropdown via click or hover
     private clicked = false
     private _targetOffset = 8
+    private _placement: IPlacement | null = null
+    private _trigger: IDropdownTrigger | null = null
+    private _autoclose: IDropdownAutoclose | null = null
 
     constructor (element: HTMLElement | string | null, config?: DropdownOption | null) {
         super(element, config)
@@ -59,7 +63,7 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
     };
 
     public get isHover (): boolean {
-        return this.config.trigger === 'hover'
+        return this._trigger === 'hover'
     };
 
     public show (): void {
@@ -109,8 +113,10 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
         this._element?.classList.add(Dropdown.DEFAULT.class.base)
         this._targetElement?.classList.add(Dropdown.DEFAULT.class.base)
 
-        this.config.placement ??= (this._element?.getAttribute(Dropdown.DEFAULT.attr.placement) ?? 'bottom-start') as Placement
-        this.config.trigger ??= (this._element?.getAttribute(Dropdown.DEFAULT.attr.trigger) == 'hover' ? 'hover' : 'click')
+        this._placement = DomEngine.getAttribute(this._element!, Dropdown.DEFAULT.attr.placement, this.config.placement)
+        this._trigger = DomEngine.getAttribute(this._element!, Dropdown.DEFAULT.attr.trigger, this.config.trigger ?? 'click')
+        this._autoclose = DomEngine.getAttribute(this._element!, Dropdown.DEFAULT.attr.autoclose, this.config.autoclose)
+
         if ((this._targetElement?.classList.contains(Dropdown.DEFAULT.class.hidden)) === false) {
             this.show()
         }
@@ -149,14 +155,21 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
         }
 
         // Click outside
+
         window.addEventListener('click', (event) => {
             if (this._destroyed) return
             if ((this._targetElement != null) && (this._element != null) && event.target instanceof HTMLElement) {
-                if (!DomEngine.isElementSameOrContains(this._targetElement, event.target) && !DomEngine.isElementSameOrContains(this._element, event.target)) {
+                if (DomEngine.isElementSameOrContains(this._element, event.target)) {
+                    return
+                }
+
+                const contains = DomEngine.isElementSameOrContains(this._targetElement, event.target)
+                if ((this._autoclose == 'outside' && !contains) || (this._autoclose == 'inside' && contains) || this._autoclose == 'both') {
                     this.hide()
                 }
             }
         })
+
     }
 
     private keyListener = (e: KeyboardEvent) => {
@@ -167,14 +180,13 @@ export default class Dropdown extends BaseComponent<DropdownOption> {
 
     // Helper
     private addComputePositionInTargetElement (): void {
-        console.info(this._targetOffset)
         const middlewares = [offset(this._targetOffset)]
 
         if (this._element != null && this._targetElement != null) {
             this._targetElement.classList.add('absolute')
 
             computePosition(this._element, this._targetElement, {
-                placement: this.config.placement,
+                placement: this._placement ?? 'bottom-start',
                 middleware: middlewares
             }).then(({
                 x,

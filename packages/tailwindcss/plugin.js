@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin'
-const colors = require('tailwindcss/colors')
 
+const colors = require('tailwindcss/colors')
 
 const colorConfig = {
   theme: {
@@ -41,6 +41,7 @@ module.exports = plugin.withOptions(function () {
     e
   }) {
 
+    // Collapse
     addVariant('fc-collapse-open', [({
       modifySelectors,
       separator
@@ -56,6 +57,8 @@ module.exports = plugin.withOptions(function () {
         return `.fc-collapse.open.${e(`fc-collapse-open${separator}${className}`)}`
       })
     }])
+
+    // Tab
     addVariant('fc-tab-active', [({
       modifySelectors,
       separator
@@ -65,6 +68,7 @@ module.exports = plugin.withOptions(function () {
       })
     }])
 
+    // Dropdown
     addVariant('fc-dropdown-open', [({
       modifySelectors,
       separator
@@ -81,6 +85,7 @@ module.exports = plugin.withOptions(function () {
       })
     }])
 
+    // Modal
     addVariant('fc-modal-open', [({
       modifySelectors,
       separator
@@ -96,6 +101,34 @@ module.exports = plugin.withOptions(function () {
         return `.fc-modal.open.${e(`fc-modal-open${separator}${className}`)}`
       })
     }])
+
+    // Theme Switcher
+    addVariant('fc-theme-light', [({
+      modifySelectors,
+      separator
+    }) => {
+      modifySelectors(({ className }) => {
+        return `.fc-theme.light-theme.${e(`fc-theme-light${separator}${className}`)}`
+      })
+    },])
+    addVariant('fc-theme-dark', [({
+      modifySelectors,
+      separator
+    }) => {
+      modifySelectors(({ className }) => {
+        return `.fc-theme.dark-theme.${e(`fc-theme-dark${separator}${className}`)}`
+      })
+    },])
+    addVariant('fc-theme-system', [({
+      modifySelectors,
+      separator
+    }) => {
+      modifySelectors(({ className }) => {
+        return `.fc-theme.system-theme.${e(`fc-theme-system${separator}${className}`)}`
+      })
+    },])
+
+    // Offcanvas
     addVariant('fc-offcanvas-open', [({
       modifySelectors,
       separator
@@ -113,6 +146,6 @@ module.exports = plugin.withOptions(function () {
     }])
   }
 }, function (options = {}) {
-  const colors = options.colors?.enable ?? false
-  return colors ? colorConfig : {}
+  const colorEnabled = typeof options.colors == 'boolean' ? options.colors : options.colors?.enable ?? false
+  return colorEnabled ? colorConfig : {}
 })

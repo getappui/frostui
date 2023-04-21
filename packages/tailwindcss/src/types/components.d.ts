@@ -1,7 +1,13 @@
-export type Alignment = 'start' | 'end'
-export type Side = 'top' | 'right' | 'bottom' | 'left'
-export type AlignedPlacement = `${Side}-${Alignment}`
-export type Placement = Side | AlignedPlacement
+import { IThemeType } from '~/types/states'
+
+export type IAlignment = 'start' | 'end'
+export type ISide = 'top' | 'right' | 'bottom' | 'left'
+export type IAlignedPlacement = `${ISide}-${IAlignment}`
+export type IPlacement = ISide | IAlignedPlacement
+
+export type IThemeSwitcherTrigger = 'never' | 'switch' | 'auto';
+export type IDropdownAutoclose = 'outside' | 'inside' | 'both';
+export type IDropdownTrigger = 'hover' | 'click';
 
 export interface BaseComponentOption {
 
@@ -18,8 +24,9 @@ export interface AccordionOption extends BaseComponentOption {
 
 export interface DropdownOption extends BaseComponentOption {
     target?: string | HTMLElement,
-    placement?: Placement,
-    trigger?: 'hover' | 'click'
+    placement?: IPlacement,
+    trigger?: IDropdownTrigger,
+    autoclose?: IDropdownAutoclose
 }
 
 export interface ModalOption extends BaseComponentOption {
@@ -39,10 +46,15 @@ export interface TabOption extends BaseComponentOption {
 }
 
 export interface TooltipOption extends BaseComponentOption {
-    placement?: Placement,
+    placement?: IPlacement,
     trigger?: 'click' | 'hover'
 }
 
 export interface DismissableOption extends BaseComponentOption {
     target?: string | HTMLElement
+}
+
+export interface ThemeSwitcherOption extends BaseComponentOption {
+    theme?: IThemeType,
+    trigger?: IThemeSwitcherTrigger
 }
