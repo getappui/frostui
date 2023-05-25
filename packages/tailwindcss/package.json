@@ -3,7 +3,7 @@
   "description": "FrostUI is a component library built upon tailwindcss (Utility first CSS framework)",
   "repository": "https://github.com/getappui/frostui",
   "homepage": "https://frost.getappui.com/",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publishConfig": {
     "access": "public"
   },

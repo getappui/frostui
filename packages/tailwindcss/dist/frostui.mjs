@@ -633,7 +633,7 @@ const Te = { getClippingRect: function(e) {
     super(t, s);
     o(this, "_targetElement", null);
     o(this, "clicked", !1);
-    o(this, "_targetOffset", 8);
+    o(this, "_targetOffset", 4);
     o(this, "_placement", null);
     o(this, "_trigger", null);
     o(this, "_autoclose", null);
@@ -666,7 +666,7 @@ const Te = { getClippingRect: function(e) {
   }
   initOptions() {
     var t, s, n, a;
-    if ((t = this._element) == null || t.classList.add(T.DEFAULT.class.base), (s = this._targetElement) == null || s.classList.add(T.DEFAULT.class.base), this._placement = p.getAttribute(this._element, T.DEFAULT.attr.placement, this.config.placement), this._trigger = p.getAttribute(this._element, T.DEFAULT.attr.trigger, this.config.trigger ?? "click"), this._autoclose = p.getAttribute(this._element, T.DEFAULT.attr.autoclose, this.config.autoclose), ((n = this._targetElement) == null ? void 0 : n.classList.contains(T.DEFAULT.class.hidden)) === !1 && this.show(), (a = this._element) != null && a.hasAttribute(T.DEFAULT.attr.offset)) {
+    if ((t = this._element) == null || t.classList.add(T.DEFAULT.class.base), (s = this._targetElement) == null || s.classList.add(T.DEFAULT.class.base), this._placement = p.getAttribute(this._element, T.DEFAULT.attr.placement, this.config.placement), this._trigger = p.getAttribute(this._element, T.DEFAULT.attr.trigger, this.config.trigger ?? "click"), this._autoclose = p.getAttribute(this._element, T.DEFAULT.attr.autoclose, this.config.autoclose ?? "both"), ((n = this._targetElement) == null ? void 0 : n.classList.contains(T.DEFAULT.class.hidden)) === !1 && this.show(), (a = this._element) != null && a.hasAttribute(T.DEFAULT.attr.offset)) {
       const l = this._element.getAttribute(T.DEFAULT.attr.offset);
       isNaN(parseInt(l)) || (this._targetOffset = parseInt(l));
     }
